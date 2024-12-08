@@ -1,12 +1,15 @@
-import React from "react";
-import MapPopup from "@/components/ui/MapPopup";
+'use client';
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-const page = () => {
-  return (
-    <div>
-      <MapPopup />
-    </div>
-  );
+const Page = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push("/dashboard"); // Replace "/new-page" with the path you want to redirect to
+  }, [router]);
+
+  return <div></div>;
 };
 
-export default page;
+export default Page;

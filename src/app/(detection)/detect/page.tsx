@@ -7,7 +7,6 @@ import { Tensor, InferenceSession } from "onnxruntime-web";
 import clsx from "clsx";
 
 import labels from "@/utils/model-labels.json";
-
 import { downloadBuffer } from "@/utils/model-download";
 import { detectImage } from "@/utils/model-detect";
 
@@ -32,9 +31,7 @@ const Page = () => {
     net: InferenceSession;
     nms: InferenceSession;
   } | null>(null);
-  const [detectionResult, setDetectionResult] = useState<
-    DetectionResultProps[] | null
-  >(null);
+  const [detectionResult, setDetectionResult] = useState<DetectionResultProps[] | null>(null);
   const [cameraOpen, setCameraOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -66,17 +63,14 @@ const Page = () => {
         executionProviders: ["wasm"],
       });
 
-      const tensor = new Tensor(
-        "float32",
-        new Float32Array(MODEL_SHAPES.reduce((a, b) => a * b)),
-        MODEL_SHAPES
-      );
+      const tensor = new Tensor("float32", new Float32Array(MODEL_SHAPES.reduce((a, b) => a * b)), MODEL_SHAPES);
       await yolov8.run({ images: tensor });
 
       setSession({ net: yolov8, nms });
       console.log("Model loaded successfully");
     } catch (error) {
       console.error("Error loading model:", error);
+      alert(`Error loading model: ${error}`);
     }
   }
 
@@ -110,6 +104,7 @@ const Page = () => {
               setImage(img);
             } catch (error) {
               console.error("Error detecting image:", error);
+              alert(`Error detecting image: ${error}`);
             }
           };
         }
@@ -119,7 +114,7 @@ const Page = () => {
       videoRef.current.dataset.intervalId = String(intervalId);
     } catch (error) {
       console.error("Error accessing camera:", error);
-      alert("Could not access the camera.");
+      alert(`Error accessing camera: ${error}`);
       setCameraOpen(false);
     }
   };
@@ -141,10 +136,7 @@ const Page = () => {
     }
   };
 
-  const drawDetectionResults = (
-    img: HTMLImageElement | null,
-    results: DetectionResultProps[] | null
-  ) => {
+  const drawDetectionResults = (img: HTMLImageElement | null, results: DetectionResultProps[] | null) => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     const video = videoRef.current;
@@ -156,20 +148,12 @@ const Page = () => {
     const containerHeight = container.offsetHeight;
 
     let canvasWidth = containerWidth;
-    let canvasHeight =
-      containerWidth /
-      (img
-        ? img.naturalWidth / img.naturalHeight
-        : video.videoWidth / video.videoHeight);
+    let canvasHeight = containerWidth / (img ? img.naturalWidth / img.naturalHeight : video.videoWidth / video.videoHeight);
 
     // If canvasHeight exceeds the container, adjust the canvas size to fit
     if (canvasHeight > containerHeight) {
       canvasHeight = containerHeight;
-      canvasWidth =
-        containerHeight *
-        (img
-          ? img.naturalWidth / img.naturalHeight
-          : video.videoWidth / video.videoHeight);
+      canvasWidth = containerHeight * (img ? img.naturalWidth / img.naturalHeight : video.videoWidth / video.videoHeight);
     }
 
     canvas.width = canvasWidth;
@@ -191,21 +175,24 @@ const Page = () => {
       results.forEach((detection) => {
         const [x, y, width, height] = detection.bbox;
 
+        // Draw semi-transparent background over the detection box
+        ctx.globalAlpha = 0.4; // Set transparency to 20%
+        ctx.fillStyle = "black";
+        ctx.fillRect(x * scaleX, y * scaleY, width * scaleX, height * scaleY);
+        ctx.globalAlpha = 1.0; // Reset transparency
+
+        // Draw the bounding box
         ctx.beginPath();
         ctx.rect(x * scaleX, y * scaleY, width * scaleX, height * scaleY);
         ctx.lineWidth = 2;
         ctx.strokeStyle = "red";
         ctx.stroke();
 
-        ctx.font = "12px Arial";
-        ctx.fillStyle = "red";
-        ctx.fillText(
-          `${labels[detection.label]} (${(detection.confidence * 100).toFixed(
-            2
-          )}%)`,
-          x * scaleX,
-          y * scaleY > 20 ? y * scaleY - 5 : y * scaleY + 15
-        );
+        // Draw text label inside the box
+        const text = `${labels[detection.label]} (${(detection.confidence * 100).toFixed(2)}%)`;
+        ctx.font = "16px Arial"; // Adjust font size to fit inside the box
+        ctx.fillStyle = "white"; // Ensure the text is visible
+        ctx.fillText(text, x * scaleX + 5, y * scaleY + 20); // Add padding inside the box
       });
     }
   };
@@ -225,16 +212,14 @@ const Page = () => {
           console.log("Results:", results);
         } catch (error) {
           console.error("Error detecting image:", error);
+          alert(`Error detecting image: ${error}`);
         }
       }
     };
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="relative w-full h-screen flex items-center justify-center overflow-hidden"
-    >
+    <div ref={containerRef} className="relative w-full h-screen flex items-center justify-center overflow-hidden">
       <div className="w-full h-full bg-white"></div>
       <video
         ref={videoRef}
@@ -244,8 +229,8 @@ const Page = () => {
       ></video>
       <canvas
         ref={canvasRef}
-        className="absolute z-10 pointer-events-none"
-        style={{ maxWidth: "100%", maxHeight: "100%" }}
+        className="absolute z-10 pointer-events-none w-full h-full object-cover"
+        style={{ objectFit: "cover" }}
       />
 
       {/* Back Button */}
@@ -267,8 +252,6 @@ const Page = () => {
           onChange={handleFileUpload}
         />
       </label>
-
-    
     </div>
   );
 };

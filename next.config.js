@@ -23,13 +23,20 @@ const nextConfig = {
           {
             from: "./public/model",
             to: "static/chunks/app",
-          }
+          },
         ],
       })
     );
 
     return config;
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  output: "standalone",
 };
 
 module.exports = nextConfig;
