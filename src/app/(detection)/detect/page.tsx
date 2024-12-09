@@ -276,7 +276,7 @@ const Page = () => {
           <>
             <img src="/undraw_the_search_s0xf.svg" alt="" className="h-96 " />
             <h2 className="font-bold text-3xl text-center">
-              Start Detecting by click the button
+              Start detecting by clicking the button
             </h2>
           </>
         )}

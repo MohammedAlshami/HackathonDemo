@@ -233,7 +233,7 @@ const ScheduleTab = () => {
     <div className="space-y-4 h-full">
       <h2 className="text-teal-500 font-bold">Dates</h2>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-row gap-4">
         <ScheduleItem
           icon={<Calendar1 className="h-1/6 w-full" />}
           content="Last Checkup time"
@@ -278,14 +278,14 @@ const MapPopup = ({ ripeness_level, closePopup }) => {
           X
         </button>
         <div className="h-2"></div>
-        <Image
+        <img
           src="/sampleImage.png"
           className="hidden lg:block w-full h-32 lg:h-52 object-cover rounded-xl"
           alt=""
         />
         <TopPart ripeness_level={ripeness_level} closePopup={closePopup} />
         <a
-          className=" text-lg bg-teal-500 text-white font-bold p-2 rounded-lg border-2 border-black/5"
+          className="flex text-lg bg-teal-500 text-white font-bold p-2 rounded-lg border-2 border-black/5"
           href="/detect"
         >
           Detect
