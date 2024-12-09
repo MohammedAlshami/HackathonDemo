@@ -263,6 +263,8 @@ const Page = () => {
     <div
       ref={containerRef}
       className="relative bg-teal-700 w-full h-screen flex items-center justify-center overflow-hidden"
+      style={{ backgroundImage: "url('/loginbg.svg')" }}
+
     >
       <div
         className={` ${
@@ -280,7 +282,7 @@ const Page = () => {
 
         {renderedImage && <ImageComponent imageURL={renderedImage} />}
         <div className="flex w-full gap-4">
-          <label className="text-xl bg-white text-teal-500 rounded-xl py-2 px-4 flex flex-row-reverse justify-center font-boold items-center gap-2 cursor-pointer z-50 w-full">
+          <label className="text-xl bg-teal-500 text-white rounded-xl py-2 px-4 flex flex-row-reverse justify-center font-boold items-center gap-2 cursor-pointer z-50 w-full">
             <Upload size={24} />
             <span className="font-bold">Upload</span>
             <input
@@ -291,7 +293,7 @@ const Page = () => {
             />
           </label>
           {renderedImage && (
-            <label className="text-xl bg-white text-teal-500 rounded-xl py-2 px-4 flex flex-row-reverse justify-center font-boold items-center gap-2 cursor-pointer z-50 w-full">
+            <label className="text-xl bg-teal-500 text-white rounded-xl py-2 px-4 flex flex-row-reverse justify-center font-boold items-center gap-2 cursor-pointer z-50 w-full">
               <Send size={24} />
               <span className="font-bold">Send</span>
             </label>
