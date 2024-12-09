@@ -294,10 +294,10 @@ const Page = () => {
             />
           </label>
           {renderedImage && (
-            <label className="text-xl bg-teal-500 text-white rounded-xl py-2 px-4 flex flex-row-reverse justify-center font-boold items-center gap-2 cursor-pointer z-50 w-full">
+            <a href="/" className="text-xl bg-teal-500 text-white rounded-xl py-2 px-4 flex flex-row-reverse justify-center font-boold items-center gap-2 cursor-pointer z-50 w-full">
               <Send size={24} />
               <span className="font-bold">Send</span>
-            </label>
+            </a>
           )}
         </div>
       </div>
