@@ -14,9 +14,7 @@ const BreadCrumb = () => {
       <div className="flex items-center justify-between bg-teal-500/10 p-2 rounded-xl m-2">
         <div>
           <h2 className="font-bold text-teal-800">Home</h2>
-          <p className="text-gray-600 text-xs sm:text-md">
-            Real-time overview of your fleet and bookings
-          </p>
+     
         </div>
         <div className="flex gap-4">
           <div className="bg-white flex items-center  p-2 px-3 border-2 border-black/08 w-fit rounded-full">
@@ -132,7 +130,7 @@ const ScheduleSideBar = () => {
 
 const Page = () => {
   return (
-    <div className="pt-4 w-full p-2 sm:p-12">
+    <div className="pt-4 w-full p-2 sm:p-4">
       <BreadCrumb />
       <div className="h-full w-full border-2 border-black/10 p-4 rounded-xl">
         <ScheduleTop />
@@ -152,6 +150,18 @@ const Page = () => {
           />
           <ScheduleRow
             section="C"
+            rowName="Chris Hemsmorth"
+            date="24 Jun 2024"
+            classname="gap-64"
+          />
+          <ScheduleRow
+            section="D"
+            rowName="Chris Hemsmorth"
+            date="24 Jun 2024"
+            classname="gap-64"
+          />
+          <ScheduleRow
+            section="F"
             rowName="Chris Hemsmorth"
             date="24 Jun 2024"
             classname="gap-64"

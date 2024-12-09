@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, Upload, Camera } from "lucide-react";
+import { ArrowLeft, PersonStanding, Send, Upload } from "lucide-react";
 import React, { useRef, useState, useEffect, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { Tensor, InferenceSession } from "onnxruntime-web";
@@ -27,11 +27,14 @@ const Page = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [image, setImage] = useState<HTMLImageElement | null>(null);
+  const [renderedImage, setRenderedImage] = useState<string | null>(null); // State for rendered image
   const [session, setSession] = useState<{
     net: InferenceSession;
     nms: InferenceSession;
   } | null>(null);
-  const [detectionResult, setDetectionResult] = useState<DetectionResultProps[] | null>(null);
+  const [detectionResult, setDetectionResult] = useState<
+    DetectionResultProps[] | null
+  >(null);
   const [cameraOpen, setCameraOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -63,7 +66,11 @@ const Page = () => {
         executionProviders: ["wasm"],
       });
 
-      const tensor = new Tensor("float32", new Float32Array(MODEL_SHAPES.reduce((a, b) => a * b)), MODEL_SHAPES);
+      const tensor = new Tensor(
+        "float32",
+        new Float32Array(MODEL_SHAPES.reduce((a, b) => a * b)),
+        MODEL_SHAPES
+      );
       await yolov8.run({ images: tensor });
 
       setSession({ net: yolov8, nms });
@@ -92,7 +99,6 @@ const Page = () => {
           canvas.width = videoRef.current.videoWidth;
           canvas.height = videoRef.current.videoHeight;
 
-          // Capture the current frame
           ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
           const img = new Image();
@@ -108,9 +114,8 @@ const Page = () => {
             }
           };
         }
-      }, 1000); // Process one frame per second
+      }, 1000);
 
-      // Store the interval ID in the videoRef for cleanup
       videoRef.current.dataset.intervalId = String(intervalId);
     } catch (error) {
       console.error("Error accessing camera:", error);
@@ -128,7 +133,6 @@ const Page = () => {
       }
       videoRef.current.srcObject = null;
 
-      // Clear the interval if it exists
       const intervalId = videoRef.current.dataset.intervalId;
       if (intervalId) {
         clearInterval(Number(intervalId));
@@ -136,7 +140,10 @@ const Page = () => {
     }
   };
 
-  const drawDetectionResults = (img: HTMLImageElement | null, results: DetectionResultProps[] | null) => {
+  const drawDetectionResults = (
+    img: HTMLImageElement | null,
+    results: DetectionResultProps[] | null
+  ) => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
     const video = videoRef.current;
@@ -148,12 +155,19 @@ const Page = () => {
     const containerHeight = container.offsetHeight;
 
     let canvasWidth = containerWidth;
-    let canvasHeight = containerWidth / (img ? img.naturalWidth / img.naturalHeight : video.videoWidth / video.videoHeight);
+    let canvasHeight =
+      containerWidth /
+      (img
+        ? img.naturalWidth / img.naturalHeight
+        : video.videoWidth / video.videoHeight);
 
-    // If canvasHeight exceeds the container, adjust the canvas size to fit
     if (canvasHeight > containerHeight) {
       canvasHeight = containerHeight;
-      canvasWidth = containerHeight * (img ? img.naturalWidth / img.naturalHeight : video.videoWidth / video.videoHeight);
+      canvasWidth =
+        containerHeight *
+        (img
+          ? img.naturalWidth / img.naturalHeight
+          : video.videoWidth / video.videoHeight);
     }
 
     canvas.width = canvasWidth;
@@ -164,39 +178,60 @@ const Page = () => {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Draw the original image
     if (img) {
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     } else if (video) {
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     }
 
-    // Draw the detection results if available
     if (results) {
+      // First, draw a semi-transparent black overlay on the entire canvas
+      ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Then cut out the detection areas by restoring the original image in those regions
       results.forEach((detection) => {
         const [x, y, width, height] = detection.bbox;
 
-        // Draw semi-transparent background over the detection box
-        ctx.globalAlpha = 0.4; // Set transparency to 20%
-        ctx.fillStyle = "black";
-        ctx.fillRect(x * scaleX, y * scaleY, width * scaleX, height * scaleY);
-        ctx.globalAlpha = 1.0; // Reset transparency
+        // Clear the black overlay in the detection box area
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(x * scaleX, y * scaleY, width * scaleX, height * scaleY);
+        ctx.clip();
+        ctx.drawImage(
+          img || video,
+          0,
+          0,
+          img ? img.naturalWidth : video.videoWidth,
+          img ? img.naturalHeight : video.videoHeight,
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+        ctx.restore();
 
-        // Draw the bounding box
+        // Draw bounding box outline
         ctx.beginPath();
         ctx.rect(x * scaleX, y * scaleY, width * scaleX, height * scaleY);
         ctx.lineWidth = 2;
         ctx.strokeStyle = "red";
         ctx.stroke();
 
-        // Draw text label inside the box
-        const text = `${labels[detection.label]} (${(detection.confidence * 100).toFixed(2)}%)`;
-        ctx.font = "16px Arial"; // Adjust font size to fit inside the box
-        ctx.fillStyle = "white"; // Ensure the text is visible
-        ctx.fillText(text, x * scaleX + 5, y * scaleY + 20); // Add padding inside the box
+        // Draw label text
+        const text = `${labels[detection.label]} (${(
+          detection.confidence * 100
+        ).toFixed(2)}%)`;
+        ctx.font = "32px Arial";
+        ctx.fillStyle = "white";
+        ctx.fillText(text, x * scaleX + 5, y * scaleY - 10);
       });
     }
-  };
 
+    const dataURL = canvas.toDataURL("image/png");
+    setRenderedImage(dataURL);
+  };
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -219,8 +254,51 @@ const Page = () => {
   };
 
   return (
-    <div ref={containerRef} className="relative w-full h-screen flex items-center justify-center overflow-hidden">
-      <div className="w-full h-full bg-white"></div>
+    <div
+      ref={containerRef}
+      className="relative bg-teal-700 w-full h-screen flex items-center justify-center overflow-hidden"
+    >
+      <div
+        className={` ${
+          renderedImage ? "w-9/12" : "5/12"
+        } text-white flex flex-col items-center justify-center gap-12`}
+      >
+        {!renderedImage && (
+          <>
+            <img src="/undraw_the_search_s0xf.svg" alt="" className="h-96 " />
+            <h2 className="font-bold text-3xl text-center">
+              Start Detecting by click the button
+            </h2>
+          </>
+        )}
+
+        {renderedImage && (
+          <img
+            src={renderedImage}
+            alt="Rendered Output"
+            className="   border-4 border-gray-300 w-full h-[40rem] object-cover rounded-xl"
+          />
+        )}
+        <div className="flex w-full gap-4">
+          <label className="text-xl bg-white text-teal-500 rounded-xl py-2 px-4 flex flex-row-reverse justify-center font-boold items-center gap-2 cursor-pointer z-50 w-full">
+            <Upload size={24} />
+            <span className="font-bold">Upload</span>
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleFileUpload}
+            />
+          </label>
+          {renderedImage && (
+            <label className="text-xl bg-white text-teal-500 rounded-xl py-2 px-4 flex flex-row-reverse justify-center font-boold items-center gap-2 cursor-pointer z-50 w-full">
+              <Send size={24} />
+              <span className="font-bold"></span>
+            </label>
+          )}
+        </div>
+      </div>
+
       <video
         ref={videoRef}
         className="absolute z-0 w-full h-full object-cover hidden"
@@ -229,29 +307,18 @@ const Page = () => {
       ></video>
       <canvas
         ref={canvasRef}
-        className="absolute z-10 pointer-events-none w-full h-full object-cover"
+        className="hidden z-10 pointer-events-none w-full h-full object-cover"
         style={{ objectFit: "cover" }}
       />
 
-      {/* Back Button */}
+      {/* Render the image generated from the canvas */}
+
       <div
         className="absolute top-4 left-4 z-50 bg-teal-500 p-2 rounded-full flex items-center justify-center cursor-pointer"
         onClick={() => router.back()}
       >
         <ArrowLeft size={24} className="text-white" />
       </div>
-
-      {/* Upload Button */}
-      <label className="absolute bottom-4 right-4 bg-teal-500 text-white rounded-xl py-2 px-4 flex items-center gap-2 cursor-pointer z-50">
-        <Upload size={24} />
-        Upload
-        <input
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleFileUpload}
-        />
-      </label>
     </div>
   );
 };

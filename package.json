@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "antd": "^5.22.3",
     "clsx": "^2.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "jimp": "^0.16.1",

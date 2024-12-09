@@ -7,7 +7,7 @@ export async function detectImage(
 ) {
   const MODEL_SHAPES = [1, 3, 640, 640];
   const IOU_THRESHOLD = 0.45;
-  const SCORE_THRESHOLD = 0.7;
+  const SCORE_THRESHOLD = 0.2;
 
   const [modelWidth, modelHeight] = MODEL_SHAPES.slice(2);
   const input = await getImageTensorFromPath(
