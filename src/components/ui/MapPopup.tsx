@@ -284,14 +284,12 @@ const MapPopup = ({ ripeness_level, closePopup }) => {
           alt=""
         />
         <TopPart ripeness_level={ripeness_level} closePopup={closePopup} />
-        <button
+        <a
           className=" text-lg bg-teal-500 text-white font-bold p-2 rounded-lg border-2 border-black/5"
-          onClick={() => {
-            router.push("/detect");
-          }}
+          href="/detect"
         >
           Detect
-        </button>
+        </a>
         <div className="w-full h-1 bg-teal-500 rounded-full"></div>
         <PopupTabs />
       </div>

@@ -16,8 +16,8 @@ interface DetectionResultProps {
   bbox: number[]; // [x, y, width, height]
 }
 
-const MODEL_URL = "./model/best.onnx";
-const MODEL_URL_2 = "./model/nms-yolov8.onnx";
+const MODEL_URL = "/model/best.onnx?v=1";
+const MODEL_URL_2 = "/model/nms-yolov8.onnx?v=1";
 const MODEL_SHAPES = [1, 3, 640, 640];
 
 const Page = () => {
@@ -40,6 +40,7 @@ const Page = () => {
   useEffect(() => {
     if (!session) loadModel();
   }, [session]);
+  
 
   useEffect(() => {
     if (cameraOpen) {
