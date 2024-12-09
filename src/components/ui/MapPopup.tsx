@@ -187,10 +187,16 @@ const ImagesTab = () => {
     </div>
   );
 };
-const MapPopup = ({ ripeness_level }) => {
+const MapPopup = ({ ripeness_level, closePopup }) => {
   return (
     <div>
-      <div className="h-full bg-white pb-8 w-[20rem] lg:w-[27rem] border-4 border-teal-500 rounded-xl px-4 py-2 flex flex-col gap-4">
+      <div className="h-full bg-white pb-8 w-[20rem] lg:w-[27rem] border-4 border-teal-500 rounded-xl px-4 py-2 flex flex-col gap-4 relative">
+        <button
+          onClick={closePopup}
+          className="absolute top-4 right-6 bg-teal-500 text-white rounded-lg w-8 h-8 hover:bg-teal-600"
+        >
+          X
+        </button>
         <img
           src="/sampleImage.png"
           className="hidden lg:block w-full h-32 lg:h-52 object-cover rounded-xl"

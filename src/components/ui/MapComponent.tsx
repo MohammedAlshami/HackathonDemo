@@ -11,13 +11,13 @@ const DEFAULT_BASEMAP = "http://mt0.google.com/vt/lyrs=s&x={x}&y={y}&z={z}";
 const getColorByRipeness = (ripeness: string) => {
   switch (ripeness) {
     case "unripe":
-      return "blue";
+      return "yellow";
     case "ripe":
-      return "red";
+      return "#35CAF0";
     case "fully ripe":
-      return "green";
+      return "blue";
     default:
-      return "gray";
+      return "red";
   }
 };
 
@@ -35,6 +35,9 @@ const GeneralMap = ({
     setSelectedMarker({ coordinates, shapeStatus });
   };
 
+  const closePopup = () => {
+    setSelectedMarker(null);
+  };
   return (
     <div style={{ position: "relative", height: "100vh" }}>
       <MapContainer
@@ -76,7 +79,10 @@ const GeneralMap = ({
       {/* Mock-up component to show when a marker is clicked */}
       {selectedMarker && (
         <div className="absolute z-9999 top-4 right-4 ">
-          <MapPopup ripeness_level={selectedMarker.shapeStatus}/>
+          <MapPopup
+            ripeness_level={selectedMarker.shapeStatus}
+            closePopup={closePopup}
+          />
 
           {/* You can customize this with more details or components */}
         </div>

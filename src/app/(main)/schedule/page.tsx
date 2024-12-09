@@ -1,11 +1,159 @@
+import {
+  ArrowDown,
+  BellDot,
+  Calendar,
+  Filter,
+  Rows,
+  Rows3,
+} from "lucide-react";
 import React from "react";
+
+const BreadCrumb = () => {
+  return (
+    <>
+      <div className="flex items-center justify-between bg-teal-500/10 p-2 rounded-xl m-2">
+        <div>
+          <h2 className="font-bold text-teal-800">Home</h2>
+          <p className="text-gray-600 text-md">
+            Real-time overview of your fleet and bookings
+          </p>
+        </div>
+        <div className="flex gap-4">
+          <div className="bg-white flex items-center  p-2 px-3 border-2 border-black/08 w-fit rounded-full">
+            <BellDot className="fill-gray-500 text-gray-500" />
+          </div>
+          <div className="bg-white flex items-center gap-4 p-2 border-2 border-black/08 w-fit rounded-full">
+            <img
+              src="bg.png"
+              alt=""
+              className="w-8 h-8 object-cover rounded-full"
+            />
+            <h2 className="text-gray-500 text-sm">John Doe</h2>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const ScheduleTop = () => {
+  return (
+    <div className="flex items-center justify-between px-2 text-teal-500 w-full pb-4">
+      <div className="flex gap-2">
+        <Calendar />
+        <h2>Schedule</h2>
+      </div>
+
+      <div className="flex bg-teal-500/20 w-fit rounded-xl px-1 ">
+        <h2 className=" text-gray-500 py-1 m-1 rounded-md px-8">Day</h2>
+        <h2 className="bg-white py-1 m-1 rounded-md px-8 border-2 border-black/10">
+          Week
+        </h2>
+        <h2 className="text-gray-500 py-1 m-1 rounded-md px-8">Month</h2>
+      </div>
+    </div>
+  );
+};
+
+const RowItem = ({ rowName, date }) => {
+  return (
+    <div className="bg-gradient-to-r from-white to-teal-500/20 flex items-center justify-between w-[20rem] p-4 rounded-lg border-2 border-black/10">
+      <div className="flex gap-2 items-center ">
+        <img
+          src="bg.png"
+          alt=""
+          className="w-8 h-8 object-cover rounded-full"
+        />
+        <h2>{rowName}</h2>
+      </div>
+      <h2 className="text-gray-500">{date}</h2>
+    </div>
+  );
+};
+const ScheduleRow = ({ section, rowName, date, classname }) => {
+  return (
+    <div className="border border-black/10 flex flex-col justify-center h-24 ">
+      <div className={`flex ${classname}`}>
+        <div className="flex items-center gap-4 border-r-2 border-black/10 w-64 h-full">
+          <Rows3 className="fill-teal-500 text-white" />
+          <h2 className="text-sm font-bold text-gray-600">Section {section}</h2>
+        </div>
+        <RowItem rowName={rowName} date={date} />
+      </div>
+    </div>
+  );
+};
+const DateItem = ({ date, start, end }) => {
+  return (
+    <div className="flex flex-col gap-2 items-center justify-center w-fit py-2">
+      <h2 className="font-thin">{date}</h2>
+      <div className="flex gap-4 text-sm text-gray-600">
+        {Array.from({ length: end - start + 1 }, (_, i) => (
+          <h1 key={i}>{start + i}</h1>
+        ))}
+      </div>
+    </div>
+  );
+};
+const ScheduleSideBar = () => {
+  return (
+    <div className="flex gap-4 items-center">
+      <div className="h-full flex items-center justify-between  w-64 border-r-2 pr-2 shadow-r-xl pb-2">
+        <div className="border-2 border-black/10 w-fit rounded-xl  p-1 px-2 flex items-center text-gray-600">
+          <h2 className="text-sm">Sort By</h2>
+          <ArrowDown className="w-4 h-4" />
+        </div>
+        <div className="border-2 border-black/10 w-fit rounded-xl  p-1 px-2 flex items-center text-gray-600">
+          <Filter className="w-4 h-4" />
+        </div>
+      </div>
+      <div className="flex gap-8">
+        <DateItem date="1 Jun - 7 Jun" start={1} end={6} />
+        <DateItem date="1 Jun - 7 Jun" start={8} end={13} />
+
+        <DateItem date="1 Jun - 7 Jun" start={16} end={21} />
+        <div className=" hidden lg:flex gap-8">
+          <DateItem date="1 Jun - 7 Jun" start={1} end={7} />
+          <DateItem date="1 Jun - 7 Jun" start={1} end={7} />
+          <DateItem date="1 Jun - 7 Jun" start={1} end={7} />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Page = () => {
   return (
-    <div className="pt-4">
-      <div className="h-[55rem] w-full bg-contain bg-center bg-no-repeat bg-[url('/schedule_sm.svg')] sm:bg-[url('/schedule.svg')]">
-        <div className="flex items-center justify-center h-full">
-          <h1 className="text-white text-4xl">Welcome to My Page</h1>
+    <div className="pt-4 w-full p-12">
+      <BreadCrumb />
+      <div className="h-full w-full border-2 border-black/10 p-4 rounded-xl">
+        <ScheduleTop />
+        <div>
+          <ScheduleSideBar />
+          <ScheduleRow
+            section="A"
+            rowName="Chris Hemsmorth"
+            date="24 Jun 2024"
+            classname="gap-4"
+          />
+          <ScheduleRow
+            section="B"
+            rowName="James Lee"
+            date="24 Jun 2024"
+            classname="gap-24"
+          />
+          <ScheduleRow
+            section="C"
+            rowName="Chris Hemsmorth"
+            date="24 Jun 2024"
+            classname="gap-64 "
+          />
+          <ScheduleRow
+            section="D"
+            rowName="Chris Hemsmorth"
+            date="24 Jun 2024"
+            classname="gap-96 hidden lg:flex"
+          />
         </div>
       </div>
     </div>

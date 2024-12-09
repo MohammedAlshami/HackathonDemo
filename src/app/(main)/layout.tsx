@@ -11,9 +11,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="relative h-full" suppressHydrationWarning={true}>
+    <div className="relative h-full w-full" suppressHydrationWarning={true}>
       {/* Content */}
-      <div className="z-0">{children}</div>
+      <div className="z-0 w-full">{children}</div>
 
       {/* Navbar */}
       <Navbar className="fixed bottom-0 left-1/2 transform -translate-x-1/2 z-50" />
