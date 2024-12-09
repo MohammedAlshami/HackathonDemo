@@ -21,8 +21,7 @@ const Navbar = ({ className }: NavbarProbs) => {
 
   const navItems = [
     { href: "/connect", icon: Brain, label: "Detect" },
-    { href: "/map", icon: MapIcon, label: "Map" },
-    // { href: "/connect", icon: TabletIcon, label: "Device" },
+    { href: "/", icon: MapIcon, label: "Map" },
     { href: "/schedule", icon: Calendar, label: "Schedule" },
     { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
   ];

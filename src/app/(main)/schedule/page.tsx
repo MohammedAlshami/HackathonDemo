@@ -14,7 +14,7 @@ const BreadCrumb = () => {
       <div className="flex items-center justify-between bg-teal-500/10 p-2 rounded-xl m-2">
         <div>
           <h2 className="font-bold text-teal-800">Home</h2>
-          <p className="text-gray-600 text-md">
+          <p className="text-gray-600 text-xs sm:text-md">
             Real-time overview of your fleet and bookings
           </p>
         </div>
@@ -45,11 +45,13 @@ const ScheduleTop = () => {
       </div>
 
       <div className="flex bg-teal-500/20 w-fit rounded-xl px-1 ">
-        <h2 className=" text-gray-500 py-1 m-1 rounded-md px-8">Day</h2>
-        <h2 className="bg-white py-1 m-1 rounded-md px-8 border-2 border-black/10">
+        <h2 className=" text-gray-500 py-1 m-1 rounded-md px-2 sm:px-8">Day</h2>
+        <h2 className="bg-white py-1 m-1 rounded-md px-2 sm:px-8 border-2 border-black/10">
           Week
         </h2>
-        <h2 className="text-gray-500 py-1 m-1 rounded-md px-8">Month</h2>
+        <h2 className="text-gray-500 py-1 m-1 rounded-md px-2 sm:px-8">
+          Month
+        </h2>
       </div>
     </div>
   );
@@ -57,7 +59,7 @@ const ScheduleTop = () => {
 
 const RowItem = ({ rowName, date }) => {
   return (
-    <div className="bg-gradient-to-r from-white to-teal-500/20 flex items-center justify-between w-[20rem] p-4 rounded-lg border-2 border-black/10">
+    <div className="bg-gradient-to-r from-white to-teal-500/20 flex flex-col sm:flex-row items-center justify-between w-fit gap-2 sm:w-[20rem] p-4 rounded-lg border-2 border-black/10">
       <div className="flex gap-2 items-center ">
         <img
           src="bg.png"
@@ -72,11 +74,15 @@ const RowItem = ({ rowName, date }) => {
 };
 const ScheduleRow = ({ section, rowName, date, classname }) => {
   return (
-    <div className="border border-black/10 flex flex-col justify-center h-24 ">
-      <div className={`flex ${classname}`}>
-        <div className="flex items-center gap-4 border-r-2 border-black/10 w-64 h-full">
+    <div
+      className={`border border-black/10 flex flex-col justify-center h-28 sm:h-24 text-xs sm:text-normal ${classname}`}
+    >
+      <div className={`flex gap-2`}>
+        <div className="flex items-center gap-4 border-r-2 border-black/10 w-32 sm:w-64 h-full">
           <Rows3 className="fill-teal-500 text-white" />
-          <h2 className="text-sm font-bold text-gray-600">Section {section}</h2>
+          <h2 className="text-xs sm:text-sm font-bold text-gray-600">
+            Section {section}
+          </h2>
         </div>
         <RowItem rowName={rowName} date={date} />
       </div>
@@ -85,7 +91,7 @@ const ScheduleRow = ({ section, rowName, date, classname }) => {
 };
 const DateItem = ({ date, start, end }) => {
   return (
-    <div className="flex flex-col gap-2 items-center justify-center w-fit py-2">
+    <div className="flex flex-col gap-2 items-center justify-center w-fit py-2 text-xs sm:text-normal">
       <h2 className="font-thin">{date}</h2>
       <div className="flex gap-4 text-sm text-gray-600">
         {Array.from({ length: end - start + 1 }, (_, i) => (
@@ -98,7 +104,7 @@ const DateItem = ({ date, start, end }) => {
 const ScheduleSideBar = () => {
   return (
     <div className="flex gap-4 items-center">
-      <div className="h-full flex items-center justify-between  w-64 border-r-2 pr-2 shadow-r-xl pb-2">
+      <div className="h-full flex sm:flex-row items-center gap-2 sm:justify-between  w-32 sm:w-64 border-r-2 pr-2 shadow-r-xl pb-2">
         <div className="border-2 border-black/10 w-fit rounded-xl  p-1 px-2 flex items-center text-gray-600">
           <h2 className="text-sm">Sort By</h2>
           <ArrowDown className="w-4 h-4" />
@@ -109,10 +115,12 @@ const ScheduleSideBar = () => {
       </div>
       <div className="flex gap-8">
         <DateItem date="1 Jun - 7 Jun" start={1} end={6} />
-        <DateItem date="1 Jun - 7 Jun" start={8} end={13} />
 
-        <DateItem date="1 Jun - 7 Jun" start={16} end={21} />
         <div className=" hidden lg:flex gap-8">
+          <DateItem date="1 Jun - 7 Jun" start={8} end={13} />
+
+          <DateItem date="1 Jun - 7 Jun" start={16} end={21} />
+
           <DateItem date="1 Jun - 7 Jun" start={1} end={7} />
           <DateItem date="1 Jun - 7 Jun" start={1} end={7} />
           <DateItem date="1 Jun - 7 Jun" start={1} end={7} />
@@ -124,7 +132,7 @@ const ScheduleSideBar = () => {
 
 const Page = () => {
   return (
-    <div className="pt-4 w-full p-12">
+    <div className="pt-4 w-full p-2 sm:p-12">
       <BreadCrumb />
       <div className="h-full w-full border-2 border-black/10 p-4 rounded-xl">
         <ScheduleTop />
@@ -146,13 +154,7 @@ const Page = () => {
             section="C"
             rowName="Chris Hemsmorth"
             date="24 Jun 2024"
-            classname="gap-64 "
-          />
-          <ScheduleRow
-            section="D"
-            rowName="Chris Hemsmorth"
-            date="24 Jun 2024"
-            classname="gap-96 hidden lg:flex"
+            classname="gap-64"
           />
         </div>
       </div>
