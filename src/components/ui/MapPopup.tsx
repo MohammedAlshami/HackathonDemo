@@ -253,12 +253,16 @@ const ImagesTab = () => {
   return (
     <div className="flex flex-col gap-4">
       <h2 className="text-teal-500 font-bold">Images Content</h2>
-      <Image
-        src="/detection_sample.png"
-        alt=""
-        className="w-full h-32 lg:h-64 object-cover rounded-xl"
-      />
-    
+      <div className="w-full h-32 lg:h-44 object-cover rounded-xl">
+        <Image
+          src="/detection_sample.png"
+          alt=""
+          width="100%"
+          height="100%"
+          rootClassName="object-cover"
+          style={{ objectFit: "cover", borderRadius: "1rem" }}
+        />
+      </div>
     </div>
   );
 };

@@ -9,7 +9,7 @@ import clsx from "clsx";
 import labels from "@/utils/model-labels.json";
 import { downloadBuffer } from "@/utils/model-download";
 import { detectImage } from "@/utils/model-detect";
-
+import ImageComponent from "./ImageComponent";
 interface DetectionResultProps {
   label: number;
   confidence: number;
@@ -140,7 +140,7 @@ const Page = () => {
     }
   };
 
-  const drawDetectionResults = (
+  const drawDetectionResults = async (
     img: HTMLImageElement | null,
     results: DetectionResultProps[] | null
   ) => {
@@ -229,8 +229,14 @@ const Page = () => {
       });
     }
 
-    const dataURL = canvas.toDataURL("image/png");
-    setRenderedImage(dataURL);
+    const blob = await new Promise<Blob | null>((resolve) => {
+      canvas.toBlob((blob) => resolve(blob), "image/png");
+    });
+
+    if (blob) {
+      const url = URL.createObjectURL(blob);
+      setRenderedImage(url);
+    }
   };
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -272,13 +278,7 @@ const Page = () => {
           </>
         )}
 
-        {renderedImage && (
-          <img
-            src={renderedImage}
-            alt="Rendered Output"
-            className="   border-4 border-gray-300 w-full h-[40rem] object-cover rounded-xl"
-          />
-        )}
+        {renderedImage && <ImageComponent imageURL={renderedImage} />}
         <div className="flex w-full gap-4">
           <label className="text-xl bg-white text-teal-500 rounded-xl py-2 px-4 flex flex-row-reverse justify-center font-boold items-center gap-2 cursor-pointer z-50 w-full">
             <Upload size={24} />
@@ -293,7 +293,7 @@ const Page = () => {
           {renderedImage && (
             <label className="text-xl bg-white text-teal-500 rounded-xl py-2 px-4 flex flex-row-reverse justify-center font-boold items-center gap-2 cursor-pointer z-50 w-full">
               <Send size={24} />
-              <span className="font-bold"></span>
+              <span className="font-bold">Send</span>
             </label>
           )}
         </div>

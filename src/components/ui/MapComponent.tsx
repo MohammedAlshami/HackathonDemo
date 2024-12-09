@@ -87,6 +87,28 @@ const GeneralMap = ({
           {/* You can customize this with more details or components */}
         </div>
       )}
+
+      <div>
+        <div className="absolute z-9999 top-24 left-4 ">
+          <div className="flex flex-col p-2 bg-white rounded-lg border-2 border-teal-500 gap-4 p-4 text-teal-700 font-bold">
+            <div className="flex items-center">
+              <span className="inline-block w-4 h-4 rounded-full bg-yellow-300"></span>
+              <span className="ml-2">Unripe</span>
+            </div>
+            <div className="bg-teal-500 w-full h-0.5 rounded-full"></div>
+            <div>
+              <span className="inline-block w-4 h-4 rounded-full bg-blue-400"></span>
+              <span className="ml-2">Ready to be harvested</span>
+            </div>
+            <div className="bg-teal-500 w-full h-0.5 rounded-full"></div>
+
+            <div>
+              <span className="inline-block w-4 h-4 rounded-full bg-red-500"></span>
+              <span className="ml-2">Not Checked</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
