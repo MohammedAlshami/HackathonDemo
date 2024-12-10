@@ -38,14 +38,18 @@ const Page = () => {
         <AreaChartHero />
        
       </div> */}
-      <div className="p-12">
+      <div className="p-6 pb-24 lg:p-12 flex flex-col gap-12">
         <div className="flex flex-col  md:flex-row justify-between gap-24">
           <BarChartHero />
           <DonutChartCallbackExample />
         </div>
-        <div className="flex flex-col  md:flex-row justify-between gap-24">
-          <YieldedBlocks />
-          <LineChartCallbackExample />
+        <div className="flex flex-col  md:flex-row justify-between gap-12">
+          <div className="w-full sm:w-8/12">
+            <YieldedBlocks />
+          </div>
+          <div className="w-full sm:w-4/12">
+            <LineChartCallbackExample />
+          </div>
         </div>
       </div>
       {/* <div className="h-[122rem]  sm:h-[40rem] md:mx-4  md:h-[37rem] lg:h-[68rem]  w-full  bg-cover bg-center bg-no-repeat bg-[url('/xs_dashboard.svg')] sm:bg-[url('/sm_dashboard.svg')] md:bg-[url('/dashboard.svg')] "></div> */}

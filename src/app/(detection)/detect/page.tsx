@@ -36,6 +36,9 @@ const Page = () => {
     DetectionResultProps[] | null
   >(null);
   const [cameraOpen, setCameraOpen] = useState<boolean>(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("Adding detected images to the tree...");
+
 
   useEffect(() => {
     if (!session) loadModel();
@@ -259,6 +262,19 @@ const Page = () => {
       }
     };
   };
+  const handleSendClick = () => {
+    setModalVisible(true);
+    setModalMessage("Adding detected images to the tree...");
+    // Simulate a delay for processing
+    setTimeout(() => {
+      setModalMessage("Successfully added!");
+      setTimeout(() => {
+        setModalVisible(false);
+        router.push("/");
+      }, 1500);
+    }, 3000);
+    
+  };
 
   return (
     <div
@@ -267,6 +283,18 @@ const Page = () => {
       style={{ backgroundImage: "url('/loginbg.svg')" }}
 
     >
+         {modalVisible && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="text-xl bg-teal-500 text-white rounded-md p-6 text-center shadow-lg">
+            <p className="text-xl font-semibold">{modalMessage}</p>
+            {modalMessage === "Adding detected images to the tree..." && (
+              <div className="mt-4">
+                <div className="loader" /> {/* Add a loader animation here */}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
       <div
         className={` ${
           renderedImage ? "w-9/12" : "5/12"
@@ -294,7 +322,7 @@ const Page = () => {
             />
           </label>
           {renderedImage && (
-            <a href="/" className="text-xl bg-teal-500 text-white rounded-xl py-2 px-4 flex flex-row-reverse justify-center font-boold items-center gap-2 cursor-pointer z-50 w-full">
+            <a onClick={handleSendClick} className="text-xl bg-teal-500 text-white rounded-xl py-2 px-4 flex flex-row-reverse justify-center font-boold items-center gap-2 cursor-pointer z-50 w-full">
               <Send size={24} />
               <span className="font-bold">Send</span>
             </a>

@@ -10,20 +10,32 @@ interface DataItem {
 
 const data: DataItem[] = [
   {
-    name: "SolarCells",
-    amount: 4890,
+    name: "Land Acquisition",
+    amount: 50000,
   },
   {
-    name: "Glass",
-    amount: 2103,
+    name: "Seedlings",
+    amount: 12000,
   },
   {
-    name: "JunctionBox",
-    amount: 2050,
+    name: "Fertilizers",
+    amount: 8000,
   },
   {
-    name: "Adhesive",
-    amount: 1300,
+    name: "Labor Costs",
+    amount: 15000,
+  },
+  {
+    name: "Pesticides",
+    amount: 5000,
+  },
+  {
+    name: "Maintenance",
+    amount: 10000,
+  },
+  {
+    name: "Harvesting Equipment",
+    amount: 20000,
   },
 ];
 
@@ -34,7 +46,7 @@ export function DonutChartCallbackExample() {
     arr.reduce((sum, num) => sum + num, 0);
 
   const currencyFormatter = (number: number) =>
-    `$${Intl.NumberFormat("us").format(number)}`;
+    `MYR ${Intl.NumberFormat("us").format(number)}`;
 
   const payload = datas?.payload?.[0];
   const value = payload?.value ?? 0;
@@ -48,7 +60,7 @@ export function DonutChartCallbackExample() {
   return (
     <div>
       <p className="text-center text-sm text-gray-700 dark:text-gray-300">
-        Revenue by category
+        Costs by category
       </p>
       <p className="mt-2 w-full text-center text-xl font-semibold text-gray-900 dark:text-gray-50">
         {formattedValue}

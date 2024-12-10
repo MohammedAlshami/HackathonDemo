@@ -74,7 +74,7 @@ export function LineChartCallbackExample() {
     : currencyFormatter(data[data.length - 1].revenue);
 
   return (
-    <div>
+    <div className="w-full h-full">
       <p className="text-sm text-gray-700 dark:text-gray-300">
         Revenue by month
       </p>
@@ -89,7 +89,7 @@ export function LineChartCallbackExample() {
         showLegend={false}
         showYAxis={false}
         startEndOnly={true}
-        className="-mb-2 mt-8 h-48"
+        className="-mb-2 mt-8 h-64"
         tooltipCallback={(props) => {
           if (props.active) {
             setDatas((prev) => {

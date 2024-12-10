@@ -285,7 +285,7 @@ const MapPopup = ({ ripeness_level, closePopup }) => {
         />
         <TopPart ripeness_level={ripeness_level} closePopup={closePopup} />
         <a
-          className="flex text-lg bg-teal-500 text-white font-bold p-2 rounded-lg border-2 border-black/5"
+          className="flex text-center items-center justify-center text-lg bg-teal-500 text-white font-bold p-2 rounded-lg border-2 border-black/5"
           href="/detect"
         >
           Detect

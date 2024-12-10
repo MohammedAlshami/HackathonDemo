@@ -14,7 +14,6 @@ const BreadCrumb = () => {
       <div className="flex items-center justify-between bg-teal-500/10 p-2 rounded-xl m-2">
         <div>
           <h2 className="font-bold text-teal-800">Home</h2>
-     
         </div>
         <div className="flex gap-4">
           <div className="bg-white flex items-center  p-2 px-3 border-2 border-black/08 w-fit rounded-full">
@@ -55,12 +54,12 @@ const ScheduleTop = () => {
   );
 };
 
-const RowItem = ({ rowName, date }) => {
+const RowItem = ({ rowName, date, imageUrl }) => {
   return (
-    <div className="bg-gradient-to-r from-white to-teal-500/20 flex flex-col sm:flex-row items-center justify-between w-fit gap-2 sm:w-[20rem] p-4 rounded-lg border-2 border-black/10">
+    <div className="bg-gradient-to-r from-white to-teal-500/20 flex  items-center justify-between w-fit gap-2 sm:w-[20rem] p-4 rounded-lg border-2 border-black/10">
       <div className="flex gap-2 items-center ">
         <img
-          src="bg.png"
+          src={imageUrl}
           alt=""
           className="w-8 h-8 object-cover rounded-full"
         />
@@ -70,19 +69,19 @@ const RowItem = ({ rowName, date }) => {
     </div>
   );
 };
-const ScheduleRow = ({ section, rowName, date, classname }) => {
+const ScheduleRow = ({ section, rowName, date, classname, gap, imageUrl }) => {
   return (
     <div
-      className={`border border-black/10 flex flex-col justify-center h-28 sm:h-24 text-xs sm:text-normal ${classname}`}
+      className={`border border-black/10 flex flex-col justify-center h-28 sm:h-24 text-xs w-[80rem] lg:w-full sm:text-normal ${classname}`}
     >
-      <div className={`flex gap-2`}>
+      <div className={`flex ${gap}`}>
         <div className="flex items-center gap-4 border-r-2 border-black/10 w-32 sm:w-64 h-full">
           <Rows3 className="fill-teal-500 text-white" />
           <h2 className="text-xs sm:text-sm font-bold text-gray-600">
             Section {section}
           </h2>
         </div>
-        <RowItem rowName={rowName} date={date} />
+        <RowItem rowName={rowName} date={date} imageUrl={imageUrl}/>
       </div>
     </div>
   );
@@ -101,8 +100,8 @@ const DateItem = ({ date, start, end }) => {
 };
 const ScheduleSideBar = () => {
   return (
-    <div className="flex gap-4 items-center">
-      <div className="h-full flex sm:flex-row items-center gap-2 sm:justify-between  w-32 sm:w-64 border-r-2 pr-2 shadow-r-xl pb-2">
+    <div className="flex gap-4 items-center ">
+      <div className="h-full  flex items-center gap-2  border-r-2 pr-2 shadow-r-xl pb-2">
         <div className="border-2 border-black/10 w-fit rounded-xl  p-1 px-2 flex items-center text-gray-600">
           <h2 className="text-sm">Sort By</h2>
           <ArrowDown className="w-4 h-4" />
@@ -114,7 +113,7 @@ const ScheduleSideBar = () => {
       <div className="flex gap-8">
         <DateItem date="1 Jun - 7 Jun" start={1} end={6} />
 
-        <div className=" hidden lg:flex gap-8">
+        <div className=" flex gap-8">
           <DateItem date="1 Jun - 7 Jun" start={8} end={13} />
 
           <DateItem date="1 Jun - 7 Jun" start={16} end={21} />
@@ -134,37 +133,47 @@ const Page = () => {
       <BreadCrumb />
       <div className="h-full w-full border-2 border-black/10 p-4 rounded-xl">
         <ScheduleTop />
-        <div>
+        <div className=" overflow-x-scroll">
           <ScheduleSideBar />
           <ScheduleRow
             section="A"
-            rowName="Chris Hemsmorth"
-            date="24 Jun 2024"
-            classname="gap-4"
+            rowName="Ahmad Bin Abdullah"
+            date="15 Jul 2024"
+            gap="gap-4"
+            classname=""
+            imageUrl="https://thumbs.dreamstime.com/b/happy-handsome-young-hispanic-model-guy-looking-camera-toothy-smile-cheerful-positive-attractive-black-haired-latin-man-333341880.jpg"
           />
           <ScheduleRow
             section="B"
-            rowName="James Lee"
-            date="24 Jun 2024"
-            classname="gap-24"
+            rowName="Hafiz Bin Harun"
+            date="18 Jul 2024"
+            gap="gap-12"
+            classname=""
+            imageUrl="https://thumbs.dreamstime.com/b/young-latin-american-man-portrait-close-up-69958693.jpg"
           />
           <ScheduleRow
             section="C"
-            rowName="Chris Hemsmorth"
-            date="24 Jun 2024"
-            classname="gap-64"
+            rowName="Syafiq Bin Osman"
+            date="20 Jul 2024"
+            gap="gap-20"
+            classname=""
+            imageUrl="https://thumbs.dreamstime.com/b/close-up-portrait-young-hispanic-teenager-man-looking-camera-joyful-smiling-expression-against-urban-background-being-105075919.jpg"
           />
           <ScheduleRow
             section="D"
-            rowName="Chris Hemsmorth"
-            date="24 Jun 2024"
-            classname="gap-64"
+            rowName="Azlan Bin Rahman"
+            date="22 Jul 2024"
+            gap="gap-64"
+            classname=""
+            imageUrl="https://thumbs.dreamstime.com/b/serious-teenage-boy-portrait-74990789.jpg"
           />
           <ScheduleRow
-            section="F"
-            rowName="Chris Hemsmorth"
-            date="24 Jun 2024"
-            classname="gap-64"
+            section="E"
+            rowName="Farhan Bin Malik"
+            date="25 Jul 2024"
+            gap="gap-96"
+            classname=""
+            imageUrl="https://thumbs.dreamstime.com/b/man-close-to-window-looking-sad-131607913.jpg"
           />
         </div>
       </div>

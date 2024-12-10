@@ -71,7 +71,7 @@ export const BarChartHero = () => (
     index="date"
     categories={["Harvest", "Workers"]}
     valueFormatter={(number: number) =>
-      `$${Intl.NumberFormat("us").format(number).toString()}`
+      `MYR ${Intl.NumberFormat("us").format(number).toString()}`
     }
     onValueChange={(v) => console.log(v)}
   />
