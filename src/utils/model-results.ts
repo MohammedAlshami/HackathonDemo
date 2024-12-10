@@ -5,7 +5,7 @@ interface ResultsProps {
 
 const labels = [
   "abnormal",
-  "empty bunch",
+  "ripe",
   "underripe",
   "ripe",
   "unripe",

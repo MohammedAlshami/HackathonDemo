@@ -37,13 +37,13 @@ const Page = () => {
   >(null);
   const [cameraOpen, setCameraOpen] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalMessage, setModalMessage] = useState("Adding detected images to the tree...");
-
+  const [modalMessage, setModalMessage] = useState(
+    "Adding detected images to the tree..."
+  );
 
   useEffect(() => {
     if (!session) loadModel();
   }, [session]);
-  
 
   useEffect(() => {
     if (cameraOpen) {
@@ -190,11 +190,10 @@ const Page = () => {
     }
 
     if (results) {
-      // First, draw a semi-transparent black overlay on the entire canvas
+      // Draw a semi-transparent black overlay
       ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Then cut out the detection areas by restoring the original image in those regions
       results.forEach((detection) => {
         const [x, y, width, height] = detection.bbox;
 
@@ -227,9 +226,20 @@ const Page = () => {
         const text = `${labels[detection.label]} (${(
           detection.confidence * 100
         ).toFixed(2)}%)`;
-        ctx.font = "32px Arial";
+        ctx.font = "24px Arial";
         ctx.fillStyle = "white";
-        ctx.fillText(text, x * scaleX + 5, y * scaleY - 10);
+        const textWidth = ctx.measureText(text).width;
+        const textHeight = 24; // Approximate height of the text
+        const textX = x * scaleX + 5;
+        let textY = y * scaleY - 10;
+
+        // Check if the text overlaps with the bounding box
+        if (textY < 0 || textY < y * scaleY) {
+          // Position text below the bounding box
+          textY = y * scaleY + height * scaleY + textHeight + 5;
+        }
+
+        ctx.fillText(text, textX, textY);
       });
     }
 
@@ -242,6 +252,7 @@ const Page = () => {
       setRenderedImage(url);
     }
   };
+
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -273,7 +284,6 @@ const Page = () => {
         router.push("/");
       }, 1500);
     }, 3000);
-    
   };
 
   return (
@@ -281,9 +291,8 @@ const Page = () => {
       ref={containerRef}
       className="relative bg-teal-700 w-full h-screen flex items-center justify-center overflow-hidden"
       style={{ backgroundImage: "url('/loginbg.svg')" }}
-
     >
-         {modalVisible && (
+      {modalVisible && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="text-xl bg-teal-500 text-white rounded-md p-6 text-center shadow-lg">
             <p className="text-xl font-semibold">{modalMessage}</p>
@@ -322,7 +331,10 @@ const Page = () => {
             />
           </label>
           {renderedImage && (
-            <a onClick={handleSendClick} className="text-xl bg-teal-500 text-white rounded-xl py-2 px-4 flex flex-row-reverse justify-center font-boold items-center gap-2 cursor-pointer z-50 w-full">
+            <a
+              onClick={handleSendClick}
+              className="text-xl bg-teal-500 text-white rounded-xl py-2 px-4 flex flex-row-reverse justify-center font-boold items-center gap-2 cursor-pointer z-50 w-full"
+            >
               <Send size={24} />
               <span className="font-bold">Send</span>
             </a>
