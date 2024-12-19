@@ -17,7 +17,7 @@ export default function RootLayout({
       <div className="z-0">{children}</div>
 
       {/* Navbar */}
-      <Navbar className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-10000000000000000000000000" />
+      {/* <Navbar className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-10000000000000000000000000" /> */}
     </div>
   );
 }

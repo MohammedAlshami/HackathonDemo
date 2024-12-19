@@ -21,7 +21,7 @@ const BreadCrumb = () => {
           </div>
           <div className="bg-white flex items-center gap-4 p-2 border-2 border-black/08 w-fit rounded-full">
             <img
-              src="bg.png"
+              src="/bg.png"
               alt=""
               className="w-8 h-8 object-cover rounded-full"
             />
@@ -81,7 +81,7 @@ const ScheduleRow = ({ section, rowName, date, classname, gap, imageUrl }) => {
             Section {section}
           </h2>
         </div>
-        <RowItem rowName={rowName} date={date} imageUrl={imageUrl}/>
+        <RowItem rowName={rowName} date={date} imageUrl={imageUrl} />
       </div>
     </div>
   );
@@ -130,8 +130,7 @@ const ScheduleSideBar = () => {
 const Page = () => {
   return (
     <div className="pt-4 w-full p-2 sm:p-4">
-      <BreadCrumb />
-      <div className="h-full w-full border-2 border-black/10 p-4 rounded-xl">
+      <div className="h-full w-full">
         <ScheduleTop />
         <div className=" overflow-x-scroll">
           <ScheduleSideBar />

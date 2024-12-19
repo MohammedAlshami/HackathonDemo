@@ -4,11 +4,11 @@ const Page = () => {
   return (
     <div className="pt-4">
       <div
-        className="h-svh w-full bg-cover bg-center bg-no-repeat"
+        className="h-screen w-full bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/loginbg.svg')" }}
       >
         <div className="flex flex-col gap-4 items-center justify-center h-[40rem]">
-          <img src="/MPOBLogo.png" alt="" className="w-64" />
+          <img src="/DRANGUE_Logo.png" alt="" className="w-96" />
           <h2 className="text-5xl text-teal-500 font-bold">Login</h2>
           <div className="w-full max-w-lg flex flex-col gap-4 px-4">
             <input

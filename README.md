@@ -9,7 +9,7 @@
 <br />
 
 > [!NOTE]
-> Please consider starring⭐ the repository as it was a challenging task to find a solution and adapt it to Next.js 13, making it more useful for those seeking a solution.
+  > Please consider starring⭐ the repository as it was a challenging task to find a solution and adapt it to Next.js 13, making it more useful for those seeking a solution.
 
 ## ⚠ Prerequisites
 
