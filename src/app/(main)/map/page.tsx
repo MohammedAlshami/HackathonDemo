@@ -26,10 +26,11 @@ const MapPage = () => {
   //     .catch((error) => console.error("Error fetching geojson data:", error));
   // }, []);
   useEffect(() => {
-    fetch("/data/combined_zones.json")
+    fetch("http://127.0.0.1:5000/v1/field/get-all-field")
       .then((response) => response.json())
       .then((data) => setZonesData(data))
       .catch((error) => console.error("Error fetching geojson data:", error));
+    console.log(zonesData);
   }, []);
   return (
     <div className="h-screen w-full z-0">

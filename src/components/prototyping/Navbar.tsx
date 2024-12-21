@@ -69,6 +69,14 @@ export const Navbar = () => {
             Employees
           </a>
           <a
+            href="/crop/tasks"
+            className={`pb-2 ${
+              pathname === "/crop/tasks" ? "border-b-4 border-blue-300" : ""
+            }`}
+          >
+            tasks
+          </a>
+          <a
             href="/crop/schedule"
             className={`pb-2 ${
               pathname === "/crop/schedule" ? "border-b-4 border-blue-300" : ""

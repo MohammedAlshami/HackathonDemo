@@ -119,7 +119,7 @@ const GeneralMap = ({ basemap = DEFAULT_BASEMAP, layers, center, zones }) => {
 
         {/* Render zones */}
         {showZones &&
-          zones.map((geoJson, index) => (
+          zones?.map((geoJson, index) => (
             <React.Fragment key={index}>
               {geoJson.features
                 .filter((feature) =>
@@ -173,7 +173,7 @@ const GeneralMap = ({ basemap = DEFAULT_BASEMAP, layers, center, zones }) => {
 
         {/* Render markers based on zone selection */}
         {showMarkers &&
-          zones.map((geoJson, index) =>
+          zones?.map((geoJson, index) =>
             geoJson.features
               .filter((feature) => feature.geometry.type === "Point")
               .map((feature, idx) => {

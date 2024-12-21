@@ -4,15 +4,16 @@ import React, { useState } from "react";
 import { Navbar } from "@/components/prototyping/Navbar";
 
 import { CardComponent } from "@/components/prototyping/CardComponent";
+import Link from "next/link";
 
-const Farms = () => {
+const Fields = () => {
   const [isFlex, setIsFlex] = useState(false);
 
   return (
     <div>
       <div className="px-6 lg:px-12 flex flex-col gap-12">
         <div className="w-full flex justify-between items-center">
-          <h1 className="font-medium text-3xl">Farms</h1>
+          <h1 className="font-medium text-3xl">Fields</h1>
           <div className="flex items-center gap-6">
             <div
               className="flex items-center gap-2 cursor-pointer"
@@ -29,10 +30,12 @@ const Farms = () => {
                 ></div>
               </div>
             </div>
-            <div className="flex items-center gap-2">
-              <h1 className="font-medium">Add Farm</h1>
-              <RiAddFill size={24} />
-            </div>
+            <Link href="/crop/farms/create">
+              <div className="flex items-center gap-2">
+                <h1 className="font-medium">Add Farm</h1>
+                <RiAddFill size={24} />
+              </div>
+            </Link>
           </div>
         </div>
         <div
@@ -56,7 +59,7 @@ const Farms = () => {
                   </h2>
                 </div>
                 <img
-                  src={`/farms/${(index % 3) + 1}.png`}
+                  src={`/fields/${(index % 3) + 1}.png`}
                   alt={`Farm ${index + 1}`}
                   className="w-full h-full rounded-lg object-cover"
                 />
@@ -73,7 +76,7 @@ const page = () => {
   return (
     <div className="relative pt-36 bg-[#FAFAFA]">
       <Navbar />
-      <Farms />
+      <Fields />
     </div>
   );
 };
