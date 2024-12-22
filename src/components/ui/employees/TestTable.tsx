@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { FaEdit, FaTrashAlt, FaUserPlus } from "react-icons/fa";
 
@@ -28,13 +29,6 @@ const EmployeesTable = () => {
         name: client.name,
         email: client.email,
         avatar: client.avatar || "/bg.png",
-        memberSince: new Date(
-          client.memberSince || Date.now()
-        ).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        }),
         status: client.status || "Active",
       }));
 
@@ -65,7 +59,7 @@ const EmployeesTable = () => {
 
   const handleUpdateClient = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:5000/v1/employee/update`, {
+      await fetch(`http://127.0.0.1:5000/v1/employee/update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -74,7 +68,6 @@ const EmployeesTable = () => {
           email: formData.email,
         }),
       });
-      await response.json();
       setFormData({ _id: null, name: "", email: "" });
       setEditing(false);
       setIsModalOpen(false);
@@ -121,7 +114,20 @@ const EmployeesTable = () => {
   );
 
   return (
-    <div className="">
+    <div className=" p-4">
+      {/* <div className="flex justify-between items-center bg-teal-500 text-white p-4 rounded-md mb-4">
+        <h1 className="text-xl font-bold">Employees Management</h1>
+        <button
+          onClick={() => {
+            setEditing(false);
+            setFormData({ _id: null, name: "", email: "" });
+            setIsModalOpen(true);
+          }}
+          className="bg-green-500 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+        >
+          <FaUserPlus /> Add Employee
+        </button>
+      </div> */}
       <div className="flex justify-between items-center mb-4">
         <input
           type="text"
@@ -136,72 +142,62 @@ const EmployeesTable = () => {
             setFormData({ _id: null, name: "", email: "" });
             setIsModalOpen(true);
           }}
-          className="bg-green-500 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+          className="bg-teal-500 text-white px-4 py-2 rounded-lg flex items-center gap-2"
         >
-          <FaUserPlus />
+          <FaUserPlus />  
         </button>
       </div>
-      <div className="bg-white overflow-hidden w-full overflow-x-auto rounded-md border border-neutral-300 dark:border-neutral-700">
-        <table className="w-full text-left text-sm text-neutral-600 dark:text-neutral-300">
-          <thead className="border-b border-neutral-300 bg-neutral-50 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white">
-            <tr>
-              <th className="p-4">User</th>
-              <th className="p-4">ID</th>
-              <th className="p-4">Member Since</th>
-              <th className="p-4">Status</th>
-              <th className="p-4">Action</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-neutral-300 dark:divide-neutral-700">
-            {displayedClients.map((client) => (
-              <tr key={client._id}>
-                <td className="p-4">
-                  <div className="flex items-center gap-4">
-                    <img
-                      src={client.avatar}
-                      alt={`${client.name}'s avatar`}
-                      className="w-10 h-10 rounded-full object-cover"
-                    />
-                    <div>
-                      <p className="font-bold text-neutral-900 dark:text-white">
-                        {client.name}
-                      </p>
-                      <p className="text-sm text-neutral-500">{client.email}</p>
-                    </div>
-                  </div>
-                </td>
-                <td className="p-4">{client._id}</td>
-                <td className="p-4">{client.memberSince}</td>
-                <td className="p-4">
-                  <span
-                    className={`px-2 py-1 text-sm rounded ${
-                      client.status === "Active"
-                        ? "bg-green-100 text-green-600"
-                        : "bg-red-100 text-red-600"
-                    }`}
-                  >
-                    {client.status}
-                  </span>
-                </td>
-                <td className="p-4 flex gap-2">
-                  <button
-                    onClick={() => handleEditClient(client)}
-                    className="text-blue-500 hover:text-blue-700"
-                  >
-                    <FaEdit />
-                  </button>
-                  <button
-                    onClick={() => handleDeleteClient(client._id)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    <FaTrashAlt />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* Header Row */}
+      <div className="grid grid-cols-3 gap-4 bg-white p-4 rounded-lg font-semibold border border-black/10 py-4 mb-4">
+        <div>Name</div>
+        <div>Status</div>
+        <div>Actions</div>
       </div>
+      {/* Client Rows */}
+      <div className="grid gap-4">
+        {displayedClients.map((client) => (
+          <div
+            key={client._id}
+            className="grid grid-cols-3 gap-4 items-center bg-white p-4 rounded-lg shadow-md border"
+          >
+            <div className="flex items-center gap-4">
+              <img
+                src={client.avatar}
+                alt={`${client.name}'s avatar`}
+                className="w-12 h-12 rounded-full object-cover"
+              />
+              <div>
+                <p className="font-bold">{client.name}</p>
+                <p className="text-sm text-gray-500">{client.email}</p>
+              </div>
+            </div>
+            <span
+              className={`px-2 py-1 w-fit text-sm rounded ${
+                client.status === "Active"
+                  ? "bg-green-100 text-green-600"
+                  : "bg-red-100 text-red-600"
+              }`}
+            >
+              {client.status}
+            </span>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => handleEditClient(client)}
+                className="text-blue-500 hover:text-blue-700"
+              >
+                <FaEdit />
+              </button>
+              <button
+                onClick={() => handleDeleteClient(client._id)}
+                className="text-red-500 hover:text-red-700"
+              >
+                <FaTrashAlt />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+      {/* Pagination */}
       <div className="flex justify-center items-center mt-4 space-x-2">
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

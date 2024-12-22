@@ -209,7 +209,7 @@ const FertilizersTab = () => {
           icon={<BadgeRussianRuble className="h-1/6 w-full" />}
           content="Nitrogen"
         />
-        <FertilizerComponent icon={<BadgeRussianRuble />} content="Pottasium" />
+        <FertilizerComponent icon={<BadgeRussianRuble />} content="Potasium" />
       </div>
     </div>
   );
@@ -233,7 +233,7 @@ const ScheduleTab = () => {
     <div className="space-y-4 h-full">
       <h2 className="text-teal-500 font-bold">Dates</h2>
 
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-col gap-4">
         <ScheduleItem
           icon={<Calendar1 className="h-1/6 w-full" />}
           content="Last Checkup time"
@@ -278,18 +278,9 @@ const MapPopup = ({ ripeness_level, closePopup }) => {
           X
         </button>
         <div className="h-2"></div>
-        <img
-          src="/sampleImage.png"
-          className="hidden lg:block w-full h-32 lg:h-52 object-cover rounded-xl"
-          alt=""
-        />
+
         <TopPart ripeness_level={ripeness_level} closePopup={closePopup} />
-        <a
-          className="flex text-center items-center justify-center text-lg bg-teal-500 text-white font-bold p-2 rounded-lg border-2 border-black/5"
-          href="/detect"
-        >
-          Detect
-        </a>
+
         <div className="w-full h-1 bg-teal-500 rounded-full"></div>
         <PopupTabs />
       </div>

@@ -3,6 +3,7 @@ import React from "react";
 import { Navbar } from "@/components/prototyping/Navbar";
 
 import { CardComponent } from "@/components/prototyping/CardComponent";
+import Sidebar from "@/components/prototyping/Sidebar";
 
 const HomePage = ({}) => {
   return (
@@ -31,11 +32,8 @@ const HomePage = ({}) => {
 
 const page = () => {
   return (
-    <div className="relative pt-36 bg-[#FAFAFA]">
-      <Navbar />
-      {/* <HomePage /> */}
+    <div>
       <HomePage />
-      {/* <Dashboard /> */}
     </div>
   );
 };

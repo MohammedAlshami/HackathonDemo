@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import Sidebar from "@/components/prototyping/Sidebar";
 // import Navbar from "@/components/ui/Navbar";
 import { Navbar } from "@/components/prototyping/Navbar";
 export const metadata: Metadata = {
@@ -13,13 +14,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="relative h-full pt-36" suppressHydrationWarning={true}>
+    <div className="relative h-full" suppressHydrationWarning={true}>
       {/* Content */}
-      <div className="z-0">{children}</div>
+      <div className="relative  bg-[#FAFAFA]">
+        {/* <Navbar /> */}
+        {/* <HomePage /> */}
 
-      <Navbar />
+        {/* <Dashboard /> */}
+        <Sidebar>{children}</Sidebar>
+      </div>
+
+      {/* <Navbar /> */}
 
       {/* Navbar */}
+
       {/* <Navbar className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-10000000000000000000000000" /> */}
     </div>
   );

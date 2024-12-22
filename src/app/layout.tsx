@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import PrelineScript from "@/app/components/PrelineScript";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,6 +20,7 @@ export default function RootLayout({
           {children}
         </div>
       </body>
+      <PrelineScript />
     </html>
   );
 }

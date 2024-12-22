@@ -5,7 +5,49 @@ import { Navbar } from "@/components/prototyping/Navbar";
 
 import { CardComponent } from "@/components/prototyping/CardComponent";
 import Link from "next/link";
+import {
+  BadgeRussianRuble,
+  Calculator,
+  Calendar,
+  Calendar1,
+  CalendarCheck2,
+  LocateIcon,
+  Palmtree,
+} from "lucide-react";
 
+const DetailItem = ({ icon, content }) => {
+  return (
+    <div className="flex gap-2 items-center text-sm">
+      {icon}
+      {content}
+    </div>
+  );
+};
+const TopPart = () => {
+  return (
+    <div className="w-full flex flex-row gap-4">
+      <div className="w-full flex justify-between items-center ">
+        <div className="w-full flex flex-row justify-between gap-6">
+          <DetailItem
+            icon={<LocateIcon className="text-teal-500 fill-teal-500" />}
+            content={<p>2.946121, 101.559075</p>}
+          />
+          <DetailItem
+            icon={<Calendar className="text-teal-500" />}
+            content={
+              <p className="font-thin text-gray-600 ">
+                {" "}
+                <span className="font-bold whitespace-nowrap">
+                  Aug 15, 2019
+                </span>
+              </p>
+            }
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
 const Fields = () => {
   const [isFlex, setIsFlex] = useState(false);
 
@@ -13,16 +55,20 @@ const Fields = () => {
     <div>
       <div className="px-6 lg:px-12 flex flex-col gap-12">
         <div className="w-full flex justify-between items-center">
-          <h1 className="font-medium text-3xl">Fields</h1>
+          <h1 className="font-medium ">Fields</h1>
           <div className="flex items-center gap-6">
             <div
               className="flex items-center gap-2 cursor-pointer"
               onClick={() => setIsFlex(!isFlex)}
             >
-              <h1 className="font-medium text-lg">
+              <h1 className="font-medium">
                 {isFlex ? "Switch to Cards" : "Switch to Flex"}
               </h1>
-              <div className="w-10 h-6 bg-gray-300 rounded-full flex items-center p-1">
+              <div
+                className={`w-10 h-6 ${
+                  isFlex ? "bg-teal-300" : "bg-gray-300"
+                } rounded-full flex items-center p-1`}
+              >
                 <div
                   className={`w-4 h-4 bg-white rounded-full transform transition-transform duration-300 ${
                     isFlex ? "translate-x-4" : "translate-x-0"
@@ -30,9 +76,9 @@ const Fields = () => {
                 ></div>
               </div>
             </div>
-            <Link href="/crop/farms/create">
+            <Link href="/create">
               <div className="flex items-center gap-2">
-                <h1 className="font-medium">Add Farm</h1>
+                <h1 className="font-medium">Add Field</h1>
                 <RiAddFill size={24} />
               </div>
             </Link>
@@ -41,30 +87,35 @@ const Fields = () => {
         <div
           className={`${
             isFlex
-              ? "flex flex-col gap-6"
+              ? "flex flex-col gap-2"
               : "grid grid-cols-1 lg:grid-cols-3 gap-12"
-          }`}
+          } transition-all duration-300 ease-in-out`}
         >
           {Array.from({ length: 6 }).map((_, index) => (
-            <CardComponent
+            <div
+              className={`w-full h-fit bg-white border-4 border-teal-600/10 pl-2 sm:pl-0 ${
+                isFlex ? "flex items-center justify-center" : "f"
+              } rounded-lg space-y-4 shadow-md transition-all duration-300 ease-in-out`}
               key={index}
-              classname={`h-96 transform transition-transform duration-300 hover:-translate-y-2 cursor-pointer border-black/20 border-4 rounded-lg ${
-                isFlex ? "w-full" : ""
-              }`}
             >
-              <div className="relative w-full h-full">
-                <div className="bg-gradient-to-t from-purple-600/10 to-transparent w-full h-full absolute rounded-lg p-4 flex items-end">
-                  <h2 className="text-white font-bold text-xl w-full mb-4">
-                    Farm {index + 1}
-                  </h2>
-                </div>
-                <img
-                  src={`/fields/${(index % 3) + 1}.png`}
-                  alt={`Farm ${index + 1}`}
-                  className="w-full h-full rounded-lg object-cover"
-                />
+              <img
+                src={`/fields/${(index % 3) + 1}.png`}
+                alt={`Farm ${index + 1}`}
+                className={`${
+                  isFlex ? "h-12 w-12" : "h-64 w-full"
+                } rounded-lg object-cover transition-all duration-300 ease-in-out`}
+              />
+              <div
+                className={`flex ${
+                  isFlex ? "w-full flex-row justify-between" : "w-full flex-col"
+                } gap-3 px-4 pb-4 transition-all duration-300 ease-in-out`}
+              >
+                <h2 className="text-black font-bold text-xl w-full">
+                  Farm {index + 1}
+                </h2>
+                <TopPart />
               </div>
-            </CardComponent>
+            </div>
           ))}
         </div>
       </div>
@@ -73,12 +124,7 @@ const Fields = () => {
 };
 
 const page = () => {
-  return (
-    <div className="relative pt-36 bg-[#FAFAFA]">
-      <Navbar />
-      <Fields />
-    </div>
-  );
+  return <Fields />;
 };
 
 export default page;

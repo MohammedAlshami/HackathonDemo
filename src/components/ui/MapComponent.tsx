@@ -105,7 +105,7 @@ const GeneralMap = ({ basemap = DEFAULT_BASEMAP, layers, center, zones }) => {
         center={center}
         zoom={17}
         scrollWheelZoom={true}
-        className="h-[100%] w-[100%] z-0"
+        className="h-[100%] w-[100%] z-0 rounded-lg"
         maxZoom={MAXZOOM}
         ref={mapRef}
       >
@@ -208,7 +208,7 @@ const GeneralMap = ({ basemap = DEFAULT_BASEMAP, layers, center, zones }) => {
       {selectedMarker && (
         <div className="absolute z-9999 top-4 right-4">
           <MapPopup
-            ripeness_level={selectedMarker.shapeStatus}
+            ripeness_level={selectedMarker.shapeStatus || "ripe"}
             closePopup={closePopup}
           />
         </div>
@@ -216,7 +216,7 @@ const GeneralMap = ({ basemap = DEFAULT_BASEMAP, layers, center, zones }) => {
 
       {/* Legend */}
       {showLegend && (
-        <div className="absolute z-9999 top-24 left-4">
+        <div className="absolute z-9999 bottom-6 sm:top-24 left-4">
           <div className="flex flex-col p-2 bg-white rounded-lg border-2 border-teal-500 gap-4 text-teal-700 font-bold">
             <div className="flex items-center">
               <span className="inline-block w-4 h-4 rounded-full bg-yellow-300"></span>

@@ -1,4 +1,3 @@
-"use client";
 import { useState, useEffect } from "react";
 import { FaEdit, FaTrashAlt, FaPlus } from "react-icons/fa";
 
@@ -18,7 +17,7 @@ const TasksTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editing, setEditing] = useState(false);
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 3;
 
   useEffect(() => {
     fetchTasks();
@@ -74,16 +73,18 @@ const TasksTable = () => {
     )
       return;
 
+    const { _id, ...dataToSend } = formData;
+
     try {
       const response = await fetch("http://127.0.0.1:5000/v1/task/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataToSend),
       });
       await response.json();
       setIsModalOpen(false);
       resetForm();
-      fetchTasks(); // Refresh the list
+      fetchTasks();
     } catch (error) {
       console.error("Error adding task:", error);
     }
@@ -91,16 +92,15 @@ const TasksTable = () => {
 
   const handleUpdateTask = async () => {
     try {
-      const response = await fetch(`http://127.0.0.1:5000/v1/task/update`, {
+      await fetch(`http://127.0.0.1:5000/v1/task/update`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      await response.json();
       setIsModalOpen(false);
       setEditing(false);
       resetForm();
-      fetchTasks(); // Refresh the list
+      fetchTasks();
     } catch (error) {
       console.error("Error updating task:", error);
     }
@@ -128,7 +128,6 @@ const TasksTable = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     if (name === "employees") {
-      // Handle multiple select
       const selectedOptions = Array.from(
         e.target.selectedOptions,
         (option) => ({
@@ -177,7 +176,7 @@ const TasksTable = () => {
   };
 
   return (
-    <div className="">
+    <div className="p-4">
       <div className="flex justify-between items-center mb-4">
         <input
           type="text"
@@ -192,73 +191,65 @@ const TasksTable = () => {
             resetForm();
             setIsModalOpen(true);
           }}
-          className="bg-green-500 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+          className="bg-teal-500 text-white px-4 py-2 rounded-lg flex items-center gap-2"
         >
           <FaPlus />
         </button>
       </div>
 
-      <div className="overflow-hidden w-full overflow-x-auto rounded-md border border-neutral-300 dark:border-neutral-700">
-        <table className="w-full text-left text-sm text-neutral-600 dark:text-neutral-300">
-          <thead className="border-b border-neutral-300 bg-neutral-50 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white">
-            <tr>
-              <th className="p-4">Task Name</th>
-              <th className="p-4">Assigned To</th>
-              <th className="p-4">Priority</th>
-              <th className="p-4">Start Date</th>
-              <th className="p-4">Deadline</th>
-              <th className="p-4">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-neutral-300 dark:divide-neutral-700">
-            {displayedTasks.map((task) => (
-              <tr key={task._id}>
-                <td className="p-4">
-                  <div className="font-medium text-neutral-900 dark:text-white">
-                    {task.name}
-                  </div>
-                </td>
-                <td className="p-4">
-                  <div className="flex flex-wrap gap-1">
-                    {task.employees.map((emp) => (
-                      <span
-                        key={emp._id}
-                        className="bg-blue-100 text-blue-600 px-2 py-1 rounded-full text-xs"
-                      >
-                        {emp.name}
-                      </span>
-                    ))}
-                  </div>
-                </td>
-                <td className="p-4">
+      <div className="grid grid-cols-4 gap-4 bg-white p-4 rounded-lg font-semibold border border-black/10 py-4 mb-4">
+        <div>Task Name</div>
+        <div>Priority</div>
+        <div>Timeline</div>
+        <div>Actions</div>
+      </div>
+
+      <div className="grid gap-4">
+        {displayedTasks.map((task) => (
+          <div
+            key={task._id}
+            className="grid grid-cols-4 gap-4 items-center bg-white p-4 rounded-lg shadow-md border"
+          >
+            <div className="flex flex-col">
+              <p className="font-bold">{task.name}</p>
+              <div className="flex flex-wrap gap-1 mt-1">
+                {task.employees.map((emp) => (
                   <span
-                    className={`px-2 py-1 rounded-full text-xs ${getPriorityColor(
-                      task.priority
-                    )}`}
+                    key={emp._id}
+                    className="bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full text-xs"
                   >
-                    {task.priority}
+                    {emp.name}
                   </span>
-                </td>
-                <td className="p-4">{task.startDate}</td>
-                <td className="p-4">{task.deadline}</td>
-                <td className="p-4 flex gap-2">
-                  <button
-                    onClick={() => handleEditTask(task)}
-                    className="text-blue-500 hover:text-blue-700"
-                  >
-                    <FaEdit />
-                  </button>
-                  <button
-                    onClick={() => handleDeleteTask(task._id)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    <FaTrashAlt />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                ))}
+              </div>
+            </div>
+            <span
+              className={`px-2 py-1 w-fit text-sm rounded ${getPriorityColor(
+                task.priority
+              )}`}
+            >
+              {task.priority}
+            </span>
+            <div className="text-sm">
+              <p>Start: {task.startDate}</p>
+              <p>Due: {task.deadline}</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => handleEditTask(task)}
+                className="text-blue-500 hover:text-blue-700"
+              >
+                <FaEdit />
+              </button>
+              <button
+                onClick={() => handleDeleteTask(task._id)}
+                className="text-red-500 hover:text-red-700"
+              >
+                <FaTrashAlt />
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
 
       <div className="flex justify-center items-center mt-4 space-x-2">

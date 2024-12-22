@@ -62,7 +62,7 @@ const MapWithZones = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [polygon, setPolygon] = useState(null);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5000/v1/field/get-all-field")
@@ -168,19 +168,19 @@ const MapWithZones = () => {
   return (
     <div style={{ height: "100vh", position: "relative" }}>
       {/* Add Zone Button */}
-      <button
-        onClick={() => setShowModal(true)}
-        className="absolute top-4 right-4 z-[1000] bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Add Zone
-      </button>
 
       {/* Modal */}
       {showModal && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[1001] bg-white p-6 rounded-lg shadow-lg">
+        <div
+          className="absolute bottom-4 right-4 z-[1001] bg-white p-6 border-4 border-teal-600 rounded-lg shadow-lg w-64 h-64 sm:w-96 h-96  transition-all duration-300 ease-in-out transform"
+          style={{ transform: "none" }}
+        >
           {step === 1 && (
             <div>
-              <h3>Step 1: Enter Zone Details</h3>
+              <h3 className="mb-4">
+                <span className="text-teal-600 font-bold text-xl">Step 1:</span>{" "}
+                Enter Zone Details
+              </h3>
               <input
                 type="text"
                 placeholder="Zone Title"
@@ -192,11 +192,11 @@ const MapWithZones = () => {
                 placeholder="Zone Description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="block mb-4 w-full p-2 border rounded"
+                className="block mb-4 w-full h-32 sm:h-44 p-2 border rounded  transition-all duration-300 ease-in-out transform"
               />
               <button
                 onClick={handleNext}
-                className="bg-blue-500 text-white px-4 py-2 rounded"
+                className="bg-teal-500 text-white px-4 py-2 rounded w-full"
               >
                 Next
               </button>
@@ -204,37 +204,75 @@ const MapWithZones = () => {
           )}
 
           {step === 2 && (
-            <div>
-              <h3>Step 2: Draw a Polygon</h3>
-              <p>Use the drawing tools on the map to create your zone</p>
-              <button
-                onClick={handleNext}
-                className="bg-blue-500 text-white px-4 py-2 rounded"
-              >
-                Next
-              </button>
+            <div className="h-full flex flex-col justify-between">
+              <h3 className="mb-4">
+                {" "}
+                <span className="text-teal-600 font-bold text-xl">
+                  Step 2:
+                </span>{" "}
+                Draw a Polygon
+              </h3>
+              <div>
+                <p>Use the drawing tools on the map to create your zone</p>
+                <img
+                  src="/draw.png"
+                  alt=""
+                  className="h-36 w-full object-cover	rounded-lg my-4"
+                />
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleNext}
+                  className="bg-teal-500 text-white px-4 py-2 rounded w-full"
+                >
+                  Before
+                </button>{" "}
+                <button
+                  onClick={handleNext}
+                  className="bg-teal-500 text-white px-4 py-2 rounded w-full"
+                >
+                  Next
+                </button>
+              </div>
             </div>
           )}
 
           {step === 3 && (
-            <div>
-              <h3>Step 3: Confirm Details</h3>
-              <p>
-                <strong>Title:</strong> {title}
-              </p>
-              <p>
-                <strong>Description:</strong> {description}
-              </p>
-              <p>
-                <strong>Polygon:</strong>{" "}
-                {polygon ? "Polygon drawn" : "No polygon drawn"}
-              </p>
-              <button
-                onClick={handleConfirm}
-                className="bg-green-500 text-white px-4 py-2 rounded"
-              >
-                Confirm
-              </button>
+            <div className="h-full flex flex-col justify-between">
+              <div>
+                <h2 className="mb-4">
+                  <span className="text-teal-600 font-bold text-xl">
+                    Step 3:
+                  </span>{" "}
+                  Confirm Details
+                </h2>
+                <div className="space-y-4">
+                  <p>
+                    <strong>Title:</strong> {title}
+                  </p>
+                  <p>
+                    <strong>Description:</strong> {description}
+                  </p>
+                  <p>
+                    <strong>Polygon:</strong>{" "}
+                    {polygon ? "Polygon drawn" : "No polygon drawn"}
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleNext}
+                  className="bg-teal-500 text-white px-4 py-2 rounded w-full"
+                >
+                  Before
+                </button>
+                <button
+                  onClick={handleConfirm}
+                  className="bg-teal-500 text-white px-4 py-2 rounded w-full"
+                >
+                  Confirm
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -242,14 +280,11 @@ const MapWithZones = () => {
 
       <MapContainer
         center={center}
-        zoom={16}
+        zoom={19}
         style={{ height: "100%", width: "100%" }}
         ref={mapRef}
       >
-        <TileLayer
-          url="https://zappa-drangue-deployments-test.s3.ap-southeast-1.amazonaws.com/MyHackathonMaps/myhackatho/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
+        <TileLayer url="https://zappa-drangue-deployments-test.s3.ap-southeast-1.amazonaws.com/MyHackathonMaps/myhackatho/{z}/{x}/{y}.png" />
 
         {geojsonData?.map((geoJson, index) => (
           <React.Fragment key={index}>

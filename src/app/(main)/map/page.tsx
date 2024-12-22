@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import React from "react";
 import { useEffect, useState } from "react";
+import MiniSideBar from "@/components/prototyping/MiniSideBar";
 
 const layers = {
   Imagery:
@@ -34,12 +35,16 @@ const MapPage = () => {
   }, []);
   return (
     <div className="h-screen w-full z-0">
-      <DynamicMap
-        center={[-21.098761, -175.342867]}
-        // geoJsonData={geoJsonData}
-        layers={layers}
-        zones={zonesData}
-      />
+      <MiniSideBar />
+
+      <div className="lg:pl-20">
+        <DynamicMap
+          center={[-21.098761, -175.342867]}
+          // geoJsonData={geoJsonData}
+          layers={layers}
+          zones={zonesData}
+        />
+      </div>
     </div>
   );
 };

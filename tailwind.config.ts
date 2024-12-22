@@ -6,10 +6,11 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@tailus/themer/dist/components/**/*.{js,ts}",
+    "node_modules/preline/dist/*.js",
   ],
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("preline/plugin")],
 };
 export default config;
