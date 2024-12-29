@@ -93,14 +93,14 @@ const Fields = () => {
         >
           {Array.from({ length: 6 }).map((_, index) => (
             <div
-              className={`w-full h-fit bg-white border-4 border-teal-600/10 pl-2 sm:pl-0 ${
+              className={`w-full h-fit bg-white border-4 border-teal-600/10 pl-2 sm:pl-0 transform transition-transform duration-500 hover:-translate-y-2 cursor-pointer ${
                 isFlex ? "flex items-center justify-center" : "f"
               } rounded-lg space-y-4 shadow-md transition-all duration-300 ease-in-out`}
               key={index}
             >
               <img
                 src={`/fields/${(index % 3) + 1}.png`}
-                alt={`Farm ${index + 1}`}
+                alt={`Field ${index + 1}`}
                 className={`${
                   isFlex ? "h-12 w-12" : "h-64 w-full"
                 } rounded-lg object-cover transition-all duration-300 ease-in-out`}

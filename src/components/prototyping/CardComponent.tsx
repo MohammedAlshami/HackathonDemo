@@ -10,7 +10,7 @@ export const CardComponent: React.FC<CardComponentProps> = ({
   children,
 }) => {
   return (
-    <div className={`w-full  border-black/10 border-2 ${classname}`}>
+    <div className={`w-full  border-black/10 border-2 rounded-xl ${classname}`}>
       {children}
     </div>
   );

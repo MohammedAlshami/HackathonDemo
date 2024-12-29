@@ -1,19 +1,51 @@
-from ultralytics import YOLO
+import subprocess
 
-# Load your YOLOv8 model
-model = YOLO("model.pt")  # Replace "model.pt" with your model file path
+def run_command(command, cwd=None):
+    try:
+        process = subprocess.Popen(command, shell=True, cwd=cwd)
+        return process
+    except Exception as e:
+        print(f"Failed to start command: {command}\nError: {e}")
+        return None
 
-# Export the model to ONNX format
-model.export(format="onnx")
+def main():
+    processes = []
 
+    # Run Node.js server (Server 1)
+    print("Starting Server 1 (npm)...")
+    processes.append(
+        run_command("npm run dev", cwd=r"C:\Users\USER\Desktop\Work\Competitions\MyHackathon\concept")
+    )
 
+    # Activate virtual environment and run Server 2
+    print("Starting Server 2 (Python)...")
+    processes.append(
+        run_command(
+            r"C:\Users\USER\Desktop\Work\drangue\Repos\BackendServer\nogpuenv\Scripts\activate && "
+            r"python C:\Users\USER\Desktop\Work\drangue\Repos\BackendServer\main.py"
+        )
+    )
 
-# This generates ONNX files, including:
-# - 'model.onnx' (your standard ONNX model)
-# - 'model_nms.onnx' (model with Non-Maximum Suppression, if supported)
+    # Activate virtual environment and run Server 3
+    print("Starting Server 3 (Python)...")
+    processes.append(
+        run_command(
+            r"C:\Users\USER\Desktop\Work\drangue\Repos\InferenceServer\gpuenv\Scripts\activate && "
+            r"python C:\Users\USER\Desktop\Work\drangue\Repos\InferenceServer\main.py"
+        )
+    )
 
-# Save with desired names
-# import shutil
+    print("All servers started. Press Ctrl+C to stop.")
+    try:
+        # Keep the script running while servers are running
+        for process in processes:
+            if process is not None:
+                process.wait()
+    except KeyboardInterrupt:
+        print("\nShutting down servers...")
+        for process in processes:
+            if process is not None:
+                process.terminate()
 
-# shutil.move("model.onnx", "./model/best.onnx")
-# shutil.move("model_nms.onnx", "./model/nms-yolov8.onnx")
+if __name__ == "__main__":
+    main()

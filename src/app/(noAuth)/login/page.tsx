@@ -2,7 +2,7 @@ import React from "react";
 
 const Page = () => {
   return (
-    <div className="pt-4">
+    <div className="">
       <div
         className="h-screen w-full bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/loginbg.svg')" }}
@@ -23,7 +23,7 @@ const Page = () => {
             />
             <a
               className="w-full bg-teal-500 text-white p-2 rounded-lg flex justify-center items-center font-bold"
-              href="/dashboard"
+              href="/crop/home"
             >
               Login
             </a>

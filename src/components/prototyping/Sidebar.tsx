@@ -5,8 +5,8 @@ const Sidebar = ({ children }) => {
   return (
     <div className="bg-gray-50 transition-all duration-300 lg:hs-overlay-layout-open:ps-[260px] dark:bg-neutral-900">
       <div id="content">
-        <div className="sticky top-0 inset-x-0 z-20 bg-white border-y px-4 sm:px-6 lg:px-8  dark:bg-neutral-800 dark:border-neutral-700">
-          <div className="flex items-center py-2 bg-teal-500 p-2 rounded-xl m-2 py-6 ">
+        <div className="sticky top-0 inset-x-0 z-20 bg-white border-y  dark:bg-neutral-800 dark:border-neutral-700">
+          <div className="flex items-center py-2 bg-teal-500 p-2  py-6 ">
             <button
               type="button"
               className="size-8 flex justify-center items-center gap-x-2  border-gray-200 text-gray-800 hover:text-gray-500 rounded-lg focus:outline-none focus:text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-700 dark:text-neutral-200 dark:hover:text-neutral-500 dark:focus:text-neutral-500"
@@ -208,7 +208,7 @@ const Sidebar = ({ children }) => {
                   <li>
                     <a
                       className="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-300"
-                      href="/crop/farms"
+                      href="/crop/fields"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -222,7 +222,7 @@ const Sidebar = ({ children }) => {
                           d="M24 7.8C23.6 4.5 20.9 2 17.5 2c-1.7 0-3.4.7-4.6 1.9c-.7.7-1.2 1.4-1.5 2.3L17 9.9v.1h3v2h-3v2h3v2h-3v2h3v2h-3v2h7zM13.3 7c.6-1.8 2.3-3 4.2-3s3.6 1.2 4.2 3zM0 11v11h5v-7h5v7h5V11L7.5 6z"
                         ></path>
                       </svg>
-                      Farms
+                      Fields
                     </a>
                   </li>
 

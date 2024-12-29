@@ -25,7 +25,7 @@ const Hero1 = () => {
               Leverage our state-of-the-art crop monitoring system to track your
               crops' growth, health, and environmental conditions in real time.
             </p>
-            <div className="flex items-center gap-x-3 sm:text-sm">
+            {/* <div className="flex items-center gap-x-3 sm:text-sm">
               <a
                 href="/map"
                 className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex"
@@ -62,7 +62,7 @@ const Hero1 = () => {
                   />
                 </svg>
               </a>
-            </div>
+            </div> */}
           </div>
           <div className="flex-1 text-center mt-4 lg:mt-0 lg:ml-3">
             <figure className="ms-auto relative z-[1] max-w-full w-[40rem] h-auto shadow-[0_2.75rem_3.5rem_-2rem_rgb(45_55_75_/_20%),_0_0_5rem_-2rem_rgb(45_55_75_/_15%)]  rounded-b-lg">

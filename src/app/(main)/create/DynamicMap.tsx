@@ -52,6 +52,8 @@ const DrawPolygon = ({ setPolygon }) => {
 };
 
 const MapWithZones = () => {
+  const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [center, setCenter] = useState([-21.098761, -175.342867]);
   const [geojsonData, setGeojsonData] = useState(null);
   const [selectedZone, setSelectedZone] = useState(null);
@@ -67,10 +69,23 @@ const MapWithZones = () => {
   useEffect(() => {
     fetch("http://127.0.0.1:5000/v1/field/get-all-field")
       .then((response) => response.json())
-      .then((data) => setGeojsonData(data))
-      .catch((error) => console.error("Error fetching geojson data:", error));
+      .then((data) => {
+        setGeojsonData(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching geojson data:", error);
+      });
   }, []);
 
+  useEffect(() => {
+    if (loading) {
+      setProgress(0);
+      const interval = setInterval(() => {
+        setProgress((prev) => Math.min(prev + 1, 100)); // Increment for 60 seconds
+      }, 50);
+      return () => clearInterval(interval);
+    }
+  }, [loading]);
   const handleZoneClick = (layer, feature) => {
     const map = mapRef.current;
     if (map) {
@@ -129,6 +144,8 @@ const MapWithZones = () => {
       },
     };
 
+    setLoading(true);
+
     try {
       const response = await fetch("http://127.0.0.1:5000/v1/field/create", {
         method: "POST",
@@ -151,14 +168,14 @@ const MapWithZones = () => {
       ).then((response) => response.json());
       setGeojsonData(updatedZones);
 
+      setLoading(false);
+
       // Reset form and close modal
       setShowModal(false);
       setStep(1);
       setTitle("");
       setDescription("");
       setPolygon(null);
-
-      alert("Zone created successfully!");
     } catch (error) {
       console.error("Error:", error);
       alert("Error creating zone. Please try again.");
@@ -278,6 +295,18 @@ const MapWithZones = () => {
         </div>
       )}
 
+      {loading && (
+        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-80 z-[1002] flex flex-row justify-center items-center text-white text-3xl font-bold gap-6">
+          <div className="w-3/12 bg-gray-700 h-12 rounded-lg">
+            <div
+              className="h-full bg-teal-500 rounded transition-all duration-300"
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
+          <p>{Math.round(progress)}%</p>
+        </div>
+      )}
+
       <MapContainer
         center={center}
         zoom={19}
@@ -324,7 +353,6 @@ const MapWithZones = () => {
                         }
                       },
                       click: () => handleZoneClick(layer, feature),
-                      a,
                     });
 
                     addZoneTitle(mapRef.current, layer, feature);
