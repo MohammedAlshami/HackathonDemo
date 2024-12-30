@@ -1,0 +1,23 @@
+{
+  "landing": {
+    "hero": {
+      "title": "管理大农场",
+      "coloredTitle": "不必复杂",
+      "subTitle": "现在轻松控制您的农场并最大化您的收成。"
+    },
+    "logoCloud": {
+      "title": "受信任的"
+    },
+    "about": {
+      "title": "成熟度检测",
+      "description": "我们的AI系统检测水果的成熟度，帮助您确定"
+    },
+    "navLinks": {
+      "home": "首页",
+      "about": "关于",
+      "features": "特点",
+      "FAQ": "常见问题",
+      "contact": "联系我们"
+    }
+  }
+}
