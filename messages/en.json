@@ -1,0 +1,23 @@
+{
+  "landing": {
+    "hero": {
+      "title": " Managing large farms",
+      "coloredTitle": " doesn’t have to be complicated",
+      "subTitle": "  Maximize your harvest and take control of your farm with ease now."
+    },
+    "logoCloud": {
+      "title": "Trusted By"
+    },
+    "about": {
+      "title": "Ripeness Detection",
+      "description": "Our AI system detects the ripeness of fruits, helping you determine"
+    },
+    "navLinks": {
+      "home": "Home",
+      "about": "About",
+      "features": "Features",
+      "FAQ": "FAQ",
+      "contact": "Contact Us"
+    }
+  }
+}

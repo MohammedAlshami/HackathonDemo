@@ -1,5 +1,7 @@
 const CopyPlugin = require("copy-webpack-plugin");
+const createNextIntlPlugin = require("next-intl/plugin");
 
+const withNextIntl = createNextIntlPlugin();
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack: (config) => {
@@ -39,4 +41,4 @@ const nextConfig = {
   output: "standalone",
 };
 
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig);

@@ -2,18 +2,14 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 
-const Navbar = () => {
+const Navbar = ({
+  navLinks,
+}: {
+  navLinks: { label: string; href: string }[];
+}) => {
   const [isOpen, setIsOpen] = useState(false); // Track if the menu is open
-
-  // List of navigation items
-  const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#features", label: "Features" },
-    { href: "#FAQ", label: "FAQ" },
-    { href: "#contact", label: "Contact Us" },
-  ];
 
   // Function to toggle the navbar visibility
   const toggleNavbar = () => {
@@ -24,6 +20,7 @@ const Navbar = () => {
   const closeNavbar = () => {
     setIsOpen(false);
   };
+  const locale = useLocale();
 
   return (
     <>
@@ -32,7 +29,8 @@ const Navbar = () => {
         style={{ zIndex: 1000000000000000 }}
       >
         <nav
-          className="mt-6 relative max-w-[55rem] bg-white w-full border border-neutral-600/20 rounded-[36px] mx-2 py-3 px-4 md:flex md:items-center md:justify-between md:py-0 md:px-6 lg:px-8 xl:mx-auto"
+        
+          className="mt-6 relative max-w-[55rem] bg-white w-full border border-neutral-600/20 rounded-[36px] mx-2 py-3 px-4 pb-8 md:flex md:items-center md:justify-between md:py-0 md:px-6 lg:px-8 xl:mx-auto"
           aria-label="Global"
         >
           <div className="flex items-center justify-between">

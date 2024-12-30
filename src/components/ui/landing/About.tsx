@@ -184,7 +184,7 @@ const Feature2 = ({ features }) => {
   );
 };
 
-const About = () => {
+const About = ({title, description}) => {
   const features = [
     {
       icon: (
@@ -203,8 +203,8 @@ const About = () => {
           />
         </svg>
       ),
-      title: "Ripeness Detection",
-      desc: "Our AI system detects the ripeness of fruits, helping you determine",
+      title: title,
+      desc: description,
     },
   ];
 

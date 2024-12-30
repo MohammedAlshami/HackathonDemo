@@ -38,10 +38,10 @@ const logos = [
   },
 ];
 
-const LogoCloud = () => {
+const LogoCloud = ({title}) => {
   return (
     <div className="w-full  py-12 bg-teal-500">
-      <h2 className="text-center font-bold text-3xl text-white">Trust By</h2>
+      <h2 className="text-center font-bold text-3xl text-white">{title}</h2>
       <div className="mx-auto w-full px-4 md:px-8">
         <div
           className="group relative mt-6 flex gap-6 overflow-hidden p-2"
@@ -52,21 +52,26 @@ const LogoCloud = () => {
         >
           {Array(5)
             .fill(null)
-            .map((index) => (
-              <div
-                key={index}
-                className="flex shrink-0 animate-logo-cloud flex-row justify-around gap-6"
-              >
-                {logos.map((logo, key) => (
-                  <img
-                    key={key}
-                    src={logo.url}
-                    className="h-10 w-42 px-2 brightness-0  invert"
-                    alt={`${logo.name}`}
-                  />
-                ))}
-              </div>
-            ))}
+            .map(
+              (
+                _,
+                index // Replace null with `_` to ignore it and use `index`
+              ) => (
+                <div
+                  key={index} // Now `index` will provide a unique key
+                  className="flex shrink-0 animate-logo-cloud flex-row justify-around gap-6"
+                >
+                  {logos.map((logo, key) => (
+                    <img
+                      key={key}
+                      src={logo.url}
+                      className="h-10 w-42 px-2 brightness-0  invert"
+                      alt={`${logo.name}`}
+                    />
+                  ))}
+                </div>
+              )
+            )}
         </div>
       </div>
     </div>

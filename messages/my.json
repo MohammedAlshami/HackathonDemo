@@ -1,0 +1,24 @@
+{
+  "landing": {
+    "hero": {
+      "title": "Mengurus ladang besar",
+      "coloredTitle": "tidak perlu rumit",
+      "subTitle": "Maksimumkan hasil tuaian anda dan kawal ladang anda dengan mudah sekarang."
+    },
+    "logoCloud": {
+      "title": "Dipercayai Oleh"
+    },
+    "about": {
+      "title": "Pengesanan Kematangan",
+      "description": "Sistem AI kami mengesan kematangan buah-buahan, membantu anda menentukan"
+    },
+
+    "navLinks": {
+      "home": "Laman Utama",
+      "about": "Tentang",
+      "features": "Ciri-ciri",
+      "FAQ": "Soalan Lazim",
+      "contact": "Hubungi Kami"
+    }
+  }
+}

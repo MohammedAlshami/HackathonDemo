@@ -76,7 +76,11 @@ const Features1 = () => {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
   };
 
   return (
@@ -110,10 +114,7 @@ const Features1 = () => {
         </svg>
       </div>
       <div className="relative max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8 sm:py-24 pt-32 sm:pt-64">
-        <motion.div
-          className="max-w-xl space-y-3"
-          variants={itemVariants}
-        >
+        <motion.div className="max-w-xl space-y-3" variants={itemVariants}>
           <h3 className="text-indigo-600 font-semibold">Features</h3>
           <p className="text-gray-800 text-3xl font-semibold sm:text-4xl">
             Do more with less complexity

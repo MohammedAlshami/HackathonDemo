@@ -50,7 +50,17 @@ const CTA3 = () => {
   );
 };
 
-const Hero2: React.FC = () => {
+interface Hero2Props {
+  mainTitle: string;
+  mainTitleColored: string;
+  subTitle: string;
+}
+
+const Hero2: React.FC<Hero2Props> = ({
+  mainTitle,
+  mainTitleColored,
+  subTitle,
+}) => {
   return (
     <section className="relative overflow-visible bg-white ">
       {/* SVG Background */}
@@ -86,9 +96,9 @@ const Hero2: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, type: "spring", stiffness: 100 }}
           >
-            Managing large farms <br />
+            {mainTitle} <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4F46E5] to-teal-500">
-              doesn’t have to be complicated
+              {mainTitleColored}
             </span>
           </motion.h2>
           <motion.p
@@ -97,7 +107,7 @@ const Hero2: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, type: "spring", stiffness: 100 }}
           >
-            Maximize your harvest and take control of your farm with ease now.
+            {subTitle}
           </motion.p>
         </div>
 

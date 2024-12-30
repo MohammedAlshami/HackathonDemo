@@ -3,7 +3,7 @@ import React from "react";
 import { Navbar } from "@/components/prototyping/Navbar";
 
 import { CardComponent } from "@/components/prototyping/CardComponent";
-import Page from "@/app/(main)/schedule/page";
+import Page from "@/app/[lang]/(main)/schedule/page";
 
 import CalendarUI from "@/components/ui/schedule/CalendarUI";
 const Schedule = ({}) => {
