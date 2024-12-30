@@ -1,23 +1,48 @@
 {
-  "landing": {
-    "hero": {
-      "title": " Managing large farms",
-      "coloredTitle": " doesn’t have to be complicated",
-      "subTitle": "  Maximize your harvest and take control of your farm with ease now."
-    },
-    "logoCloud": {
-      "title": "Trusted By"
-    },
-    "about": {
-      "title": "Ripeness Detection",
-      "description": "Our AI system detects the ripeness of fruits, helping you determine"
-    },
-    "navLinks": {
-      "home": "Home",
-      "about": "About",
-      "features": "Features",
-      "FAQ": "FAQ",
-      "contact": "Contact Us"
+  "palm": {
+    "landing": {
+      "hero": {
+        "title": "Managing large palm farms",
+        "coloredTitle": " doesn’t have to be complicated",
+        "subTitle": "Maximize your palm harvest and take control of your farm with ease now."
+      },
+      "logoCloud": {
+        "title": "Trusted By Palm Farmers"
+      },
+      "about": {
+        "title": "Palm Ripeness Detection",
+        "description": "Our AI system detects the ripeness of palm fruits, helping you determine the best time to harvest."
+      },
+      "navLinks": {
+        "home": "Home",
+        "about": "About Palm",
+        "features": "Palm Features",
+        "FAQ": "Palm FAQ",
+        "contact": "Contact Us"
+      }
+    }
+  },
+  "pineapple": {
+    "landing": {
+      "hero": {
+        "title": "Managing large pineapple farms",
+        "coloredTitle": " doesn’t have to be complicated",
+        "subTitle": "Maximize your pineapple harvest and take control of your farm with ease now."
+      },
+      "logoCloud": {
+        "title": "Trusted By Pineapple Farmers"
+      },
+      "about": {
+        "title": "Pineapple Ripeness Detection",
+        "description": "Our AI system detects the ripeness of pineapples, helping you determine the best time to harvest."
+      },
+      "navLinks": {
+        "home": "Home",
+        "about": "About Pineapple",
+        "features": "Pineapple Features",
+        "FAQ": "Pineapple FAQ",
+        "contact": "Contact Us"
+      }
     }
   }
 }

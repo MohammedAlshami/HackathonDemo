@@ -39,6 +39,7 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   output: "standalone",
+  env: { solutionType: "pineapple" },
 };
 
 module.exports = withNextIntl(nextConfig);

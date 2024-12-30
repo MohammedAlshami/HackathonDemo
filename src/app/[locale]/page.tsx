@@ -15,10 +15,12 @@ import Stats from "@/components/ui/landing/Stats";
 import { useTranslations } from "next-intl";
 
 function Page({ lang }: { lang: any }) {
-  const hero = useTranslations("landing.hero");
-  const logoCloud = useTranslations("landing.logoCloud");
-  const about = useTranslations("landing.about");
-  const navLinks = useTranslations("landing.navLinks");
+  console.log("Solution Type");
+  const solution = process.env.solutionType;
+  const hero = useTranslations(solution + "." + "landing.hero");
+  const logoCloud = useTranslations(solution + "." + "landing.logoCloud");
+  const about = useTranslations(solution + "." + "landing.about");
+  const navLinks = useTranslations(solution + "." + "landing.navLinks");
 
   const navLinksArray = [
     { label: navLinks("home"), href: "/" },
