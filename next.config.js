@@ -39,7 +39,25 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   output: "standalone",
-  env: { solutionType: "pineapple" },
+  env: {
+    solutionType: "pineapple",
+    SUBDOMAIN_NAME: (() => {
+      try {
+        // In Node.js environment, we can use require('os').hostname()
+        const os = require("os");
+        const hostname =
+          process.env.NEXT_PUBLIC_VERCEL_URL ||
+          process.env.VERCEL_URL ||
+          os.hostname() ||
+          "localhost";
+
+        const subdomain = hostname.split(".")[0];
+        return subdomain === "localhost" ? "" : subdomain;
+      } catch (error) {
+        return "";
+      }
+    })(),
+  },
 };
 
 module.exports = withNextIntl(nextConfig);

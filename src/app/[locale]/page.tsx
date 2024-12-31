@@ -15,12 +15,27 @@ import Stats from "@/components/ui/landing/Stats";
 import { useTranslations } from "next-intl";
 
 function Page({ lang }: { lang: any }) {
+  const [subdomain, setSubdomain] = useState<string | null>(null);
+
+  useEffect(() => {
+    const hostname = window.location.hostname; // e.g., sub.example.com
+    const parts = hostname.split(".");
+
+    // Assuming the structure is subdomain.domain.tld
+    if (parts.length > 2) {
+      setSubdomain(parts[0]); // First part is the subdomain
+    } else {
+      setSubdomain("palm"); // No subdomain found
+    }
+  }, []);
   console.log("Solution Type");
-  const solution = process.env.solutionType;
-  const hero = useTranslations(solution + "." + "landing.hero");
-  const logoCloud = useTranslations(solution + "." + "landing.logoCloud");
-  const about = useTranslations(solution + "." + "landing.about");
-  const navLinks = useTranslations(solution + "." + "landing.navLinks");
+  // const solution = process.env.solutionType;
+  // const solution = process.env.SUBDOMAIN_NAME;
+  const hero = useTranslations(subdomain + "." + "landing.hero");
+  const logoCloud = useTranslations(subdomain + "." + "landing.logoCloud");
+  const about = useTranslations(subdomain + "." + "landing.about");
+  const navLinks = useTranslations(subdomain + "." + "landing.navLinks");
+  console.log("subdomain Type", subdomain);
 
   const navLinksArray = [
     { label: navLinks("home"), href: "/" },
